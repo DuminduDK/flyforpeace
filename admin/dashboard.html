@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Fly for Peace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout" style="display: none;" id="auth-guard">
+        <aside class="sidebar">
+            <div class="sidebar-logo">Fly for Peace<br><span style="font-size: 0.9rem; font-weight: 400; color: #a0aec0;">Admin Console</span></div>
+            <nav>
+                <a href="#" class="nav-link active" data-target="news-sec"><i class="fas fa-newspaper"></i> Manage News</a>
+                <a href="#" class="nav-link" data-target="donations-sec"><i class="fas fa-hand-holding-heart"></i> Donations</a>
+                <a href="#" class="nav-link" data-target="messages-sec"><i class="fas fa-envelope"></i> Messages</a>
+            </nav>
+            <div class="logout-btn nav-link" id="logout-btn" style="color: white; margin-top: auto;"><i class="fas fa-sign-out-alt"></i> Logout</div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 id="page-title">Manage News</h1>
+                <div class="user-info">Logged in as Administrator</div>
+            </header>
+
+            <!-- News Manager -->
+            <section id="news-sec" class="content-section active">
+                <h2 class="section-title" id="form-header-title">Post New Announcement</h2>
+                <form id="news-form" style="max-width: 600px; margin-bottom: 40px;">
+                    <input type="hidden" id="edit-news-id">
+                    <div class="form-group">
+                        <label>News Title</label>
+                        <input type="text" id="news-title" required placeholder="e.g. New Global Partner Joined">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="news-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Content Description</label>
+                        <textarea id="news-desc" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Thumbnail Image Upload</label>
+                        <input type="file" id="news-image" accept="image/*" required>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn" id="post-news-btn">Publish News</button>
+                        <button type="button" class="btn" id="cancel-edit-btn" style="background: var(--bg-light); color: var(--text-dark); display: none;">Cancel</button>
+                    </div>
+                    <div id="news-success" style="color: green; margin-top: 10px; display: none;">Successfully published!</div>
+                </form>
+
+                <h2 class="section-title">Published News Items</h2>
+                <table class="data-table">
+                    <thead><tr><th>Date</th><th>Title</th><th>Content Preview</th><th>Actions</th></tr></thead>
+                    <tbody id="news-table-body">
+                        <!-- Insterted via JS -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Donations Manager -->
+            <section id="donations-sec" class="content-section">
+                <h2 class="section-title">Live Donation Submissions</h2>
+                <table class="data-table">
+                    <thead><tr><th>Timestamp</th><th>Name / Email</th><th>Amount</th><th>Method</th></tr></thead>
+                    <tbody id="donations-table-body">
+                        <!-- Insterted via JS -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Messages Manager -->
+            <section id="messages-sec" class="content-section">
+                <h2 class="section-title">Contact Inquiries</h2>
+                <table class="data-table">
+                    <thead><tr><th>Timestamp</th><th>Name</th><th>Email</th><th>Message</th></tr></thead>
+                    <tbody id="messages-table-body">
+                        <!-- Insterted via JS -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modular JS -->
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>

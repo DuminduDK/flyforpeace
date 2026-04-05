@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate | Fly for Peace</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+    <header id="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo.png" alt="Air Cradle Kite Air Show - Fly for Peace" class="logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-item">Home</a></li>
+                    <li><a href="about.html" class="nav-item">About</a></li>
+                    <li><a href="leadership.html" class="nav-item">Leadership</a></li>
+                    <li><a href="donate.html" class="nav-item active">Donate</a></li>
+                    <li><a href="contact.html" class="nav-item">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="donate.html" class="btn btn-primary btn-donate-nav">Donate Now</a>
+                <div class="mobile-menu-toggle"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="container animate-up">
+            <h1>Support the Movement</h1>
+            <p>Your contribution empowers global initiatives promoting peace and cultural understanding.</p>
+        </div>
+    </div>
+
+    <!-- Donate Content -->
+    <section class="content-section pt-0 bg-light">
+        <div class="container">
+
+
+            <div class="donation-container">
+                <div class="donation-form-wrapper shadow animate-on-scroll">
+                    <h3>Make a Contribution</h3>
+                    <form id="donation-form">
+                        
+                        <div class="donation-amount-group">
+                            <label>Select Amount (USD)</label>
+                            <div class="amount-buttons">
+                                <button type="button" class="amount-btn active" data-amount="10">$10</button>
+                                <button type="button" class="amount-btn" data-amount="25">$25</button>
+                                <button type="button" class="amount-btn" data-amount="50">$50</button>
+                                <button type="button" class="amount-btn custom-amount-btn">Custom</button>
+                            </div>
+                            <div class="custom-amount-input hidden">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" id="custom-amount" min="1" placeholder="Enter amount">
+                            </div>
+                        </div>
+
+                        <div class="payment-methods">
+                            <h4>Payment Method</h4>
+                            <div class="method-options">
+                                <label class="method-card">
+                                    <input type="radio" name="payment" value="payhere" checked>
+                                    <div class="method-content">
+                                        <img src="https://www.payhere.lk/downloads/images/payhere_short_banner.png" alt="PayHere Secure" style="height: 25px;">
+                                    </div>
+                                </label>
+                                <label class="method-card">
+                                    <input type="radio" name="payment" value="bank">
+                                    <div class="method-content">
+                                        <i class="fas fa-university"></i> Bank Transfer
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Bank Details (Hidden by default) -->
+                        <div id="bank-details" class="bank-details hidden">
+                            <h5>Bank Transfer Details</h5>
+                            <p><strong>Bank:</strong> Global Peace Bank</p>
+                            <p><strong>Account Name:</strong> Fly For Peace Foundation</p>
+                            <p><strong>Account Number:</strong> 1234-5678-9012-3456</p>
+                            <p><strong>Reference:</strong> [Your Name] Donation</p>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block btn-large">
+                            <i class="fas fa-lock"></i> Secure Payment
+                        </button>
+                        <div class="trust-indicators text-center mt-3">
+                            <small class="text-muted"><i class="fas fa-shield-alt"></i> Guaranteed Safe Checkout</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo-text footer-logo">Fly for Peace</div>
+                    <p>A global initiative promoting unity, harmony, and peaceful coexistence. Air is not for war; Air is to breathe.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="leadership.html">Leadership</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons-footer">
+                        <a href="https://web.facebook.com/profile.php?id=61573327524448" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/flyforpeacex" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.instagram.com/flyforpeaceofficial" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/flyforpeace" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Fly for Peace – World Peace Movement. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script type="module">
+        import { db, collection, addDoc, Timestamp } from './js/firebase-config.js';
+
+        document.getElementById('donation-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            let amount = 10;
+            const customActive = document.querySelector('.custom-amount-input:not(.hidden)');
+            if (customActive) {
+                amount = document.getElementById('custom-amount').value;
+            } else {
+                amount = document.querySelector('.amount-btn.active').dataset.amount;
+            }
+            
+            const method = document.querySelector('input[name="payment"]:checked').value;
+
+            try {
+                await addDoc(collection(db, "donations"), {
+                    amount: amount,
+                    method: method,
+                    createdAt: Timestamp.now()
+                });
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Securely Processed!';
+                btn.style.backgroundColor = 'var(--accent-green)';
+                setTimeout(() => { location.reload(); }, 2000);
+            } catch(err) {
+                console.error(err);
+                btn.innerHTML = 'Error Processing';
+            }
+        });
+    </script>
+</body>
+</html>

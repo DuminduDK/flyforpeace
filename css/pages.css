@@ -1,0 +1,105 @@
+/* Additional Styles for Multi-page layout */
+
+/* Page Headers */
+.page-header {
+    padding: 150px 0 80px 0;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(77, 166, 231, 0.1) 0%, rgba(229, 184, 57, 0.1) 100%);
+    margin-bottom: 50px;
+    border-bottom: 1px solid var(--border-color);
+}
+.page-header h1 {
+    font-size: 3.5rem;
+    color: var(--primary-dark);
+    margin-bottom: 15px;
+}
+.page-header p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Creative Leadership Styles */
+.leadership-hero {
+    background: var(--bg-white);
+    border-radius: 24px;
+    padding: 50px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 40px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 80px;
+}
+.leadership-hero::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 10px; height: 100%;
+    background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+}
+
+.avatar-placeholder {
+    background: #f1f5f9;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    overflow: hidden; position: relative;
+    border: 5px solid white; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+.avatar-placeholder i { color: #cbd5e1; }
+.avatar-placeholder img { width: 100%; height: 100%; object-fit: cover; position: absolute; z-index: 2; }
+.avatar-placeholder.giant { width: 260px; height: 260px; font-size: 6rem; }
+.avatar-placeholder.large { width: 220px; height: 220px; font-size: 5rem; }
+.avatar-placeholder.medium { width: 140px; height: 140px; font-size: 3rem; margin: 0 auto 20px;}
+.avatar-placeholder.small { width: 90px; height: 90px; font-size: 2rem; margin: 0 auto 15px;}
+
+.role-badge.premium {
+    background: linear-gradient(135deg, var(--secondary-color), #d4af37);
+    color: white; padding: 8px 20px; font-size: 1rem; box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+}
+
+.leader-info h2 { font-size: 2.5rem; margin-bottom: 10px; }
+
+/* Members Grid */
+.committee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+.member-card {
+    background: white; border-radius: 16px; padding: 30px 20px;
+    text-align: center; border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm); transition: var(--transition);
+}
+.member-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+.member-card h4 { font-size: 1.3rem; margin-bottom: 5px; }
+.member-card .role { color: var(--primary-color); font-weight: 600; font-size: 0.95rem; }
+
+/* Exec Members Specfic */
+.exec-focus {
+    display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 60px;
+}
+.exec-card {
+    background: linear-gradient(to bottom, #ffffff, #f8fafc);
+    border-radius: 20px; padding: 40px; text-align: center;
+    box-shadow: var(--shadow-md); border-top: 4px solid var(--primary-color);
+    width: 100%; max-width: 350px;
+}
+
+/* Page specific layouts */
+.content-section { padding: 80px 0; }
+
+@media (max-width: 768px) {
+    .leadership-hero { flex-direction: column; text-align: center; padding: 30px; }
+    .page-header { padding: 120px 0 60px 0; }
+    .page-header h1 { font-size: 2.5rem; }
+}
