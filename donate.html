@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donate | Fly for Peace</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -24,13 +25,11 @@
                     <li><a href="index.html" class="nav-item">Home</a></li>
                     <li><a href="about.html" class="nav-item">About</a></li>
                     <li><a href="leadership.html" class="nav-item">Leadership</a></li>
-                    <li><a href="donate.html" class="nav-item active">Donate</a></li>
                     <li><a href="contact.html" class="nav-item">Contact</a></li>
                 </ul>
             </nav>
             
             <div class="nav-actions">
-                <a href="donate.html" class="btn btn-primary btn-donate-nav">Donate Now</a>
                 <div class="mobile-menu-toggle"><i class="fas fa-bars"></i></div>
             </div>
         </div>
@@ -71,13 +70,7 @@
                             <h4>Payment Method</h4>
                             <div class="method-options">
                                 <label class="method-card">
-                                    <input type="radio" name="payment" value="payhere" checked>
-                                    <div class="method-content">
-                                        <img src="https://www.payhere.lk/downloads/images/payhere_short_banner.png" alt="PayHere Secure" style="height: 25px;">
-                                    </div>
-                                </label>
-                                <label class="method-card">
-                                    <input type="radio" name="payment" value="bank">
+                                    <input type="radio" name="payment" value="bank" checked>
                                     <div class="method-content">
                                         <i class="fas fa-university"></i> Bank Transfer
                                     </div>
@@ -85,17 +78,25 @@
                             </div>
                         </div>
 
-                        <!-- Bank Details (Hidden by default) -->
-                        <div id="bank-details" class="bank-details hidden">
-                            <h5>Bank Transfer Details</h5>
-                            <p><strong>Bank:</strong> Global Peace Bank</p>
-                            <p><strong>Account Name:</strong> Fly For Peace Foundation</p>
-                            <p><strong>Account Number:</strong> 1234-5678-9012-3456</p>
+                        <!-- Bank Details (Visible by default) -->
+                        <div id="bank-details" class="bank-details" style="display: block; margin-top: 20px;">
+                            <h5 style="margin-bottom: 15px; color: var(--primary-dark); border-bottom: 2px solid var(--secondary-color); display: inline-block;">Official Bank Transfer Details</h5>
+                            <p><strong>Bank:</strong> Sampath Bank</p>
+                            <p><strong>Branch:</strong> Kiribathgoda</p>
+                            <p><strong>Account Name:</strong> Ravana Aviation Kite Association</p>
+                            <p><strong>Account Number:</strong> 0005 1002 0464</p>
+                            <p><strong>Swift Code:</strong> BSAMLKLX</p>
                             <p><strong>Reference:</strong> [Your Name] Donation</p>
                         </div>
 
+                        <div id="slip-upload-group" class="form-group mt-3">
+                            <label for="donation-slip" style="font-weight: 600; color: var(--primary-dark);">Upload Payment Slip (Screenshot/Photo) <span style="color: red;">*</span></label>
+                            <input type="file" id="donation-slip" class="form-control" accept="image/*" required>
+                            <small class="text-muted">Once we verify your transfer, it will appear in our system.</small>
+                        </div>
+
                         <button type="submit" class="btn btn-primary btn-block btn-large">
-                            <i class="fas fa-lock"></i> Secure Payment
+                            <i class="fas fa-paper-plane"></i> Submit Donation Notice
                         </button>
                         <div class="trust-indicators text-center mt-3">
                             <small class="text-muted"><i class="fas fa-shield-alt"></i> Guaranteed Safe Checkout</small>
@@ -125,7 +126,6 @@
                 <div class="footer-links">
                     <h4>Support</h4>
                     <ul>
-                        <li><a href="donate.html">Donate</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
@@ -154,7 +154,9 @@
         document.getElementById('donation-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button[type="submit"]');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Slip...';
+            btn.disabled = true;
             
             let amount = 10;
             const customActive = document.querySelector('.custom-amount-input:not(.hidden)');
@@ -165,19 +167,62 @@
             }
             
             const method = document.querySelector('input[name="payment"]:checked').value;
+            const fileInput = document.getElementById('donation-slip');
 
             try {
+                let slipBase64 = null;
+                if (fileInput.files && fileInput.files[0]) {
+                    const file = fileInput.files[0];
+                    slipBase64 = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            const img = new Image();
+                            img.onload = () => {
+                                const canvas = document.createElement('canvas');
+                                const MAX_WIDTH = 800; // slightly larger for slips to ensure readability
+                                let width = img.width;
+                                let height = img.height;
+                                
+                                if (width > MAX_WIDTH) {
+                                    height = Math.round((height * MAX_WIDTH) / width);
+                                    width = MAX_WIDTH;
+                                }
+                                
+                                canvas.width = width;
+                                canvas.height = height;
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(img, 0, 0, width, height);
+                                resolve(canvas.toDataURL('image/jpeg', 0.8));
+                            };
+                            img.onerror = reject;
+                            img.src = event.target.result;
+                        };
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                }
+
+                if (!slipBase64 && method === 'bank') {
+                    throw new Error("Please upload your payment slip.");
+                }
+
                 await addDoc(collection(db, "donations"), {
                     amount: amount,
-                    method: method,
+                    method: "Bank Transfer",
+                    slipBase64: slipBase64,
+                    status: "Pending Verification",
                     createdAt: Timestamp.now()
                 });
-                btn.innerHTML = '<i class="fas fa-check-circle"></i> Securely Processed!';
+
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Submission Received!';
                 btn.style.backgroundColor = 'var(--accent-green)';
-                setTimeout(() => { location.reload(); }, 2000);
+                setTimeout(() => { location.reload(); }, 2500);
             } catch(err) {
                 console.error(err);
-                btn.innerHTML = 'Error Processing';
+                btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+                btn.disabled = false;
+                alert(err.message || "There was an error processing your donation. Please try again.");
+                setTimeout(() => { btn.innerHTML = originalHTML; }, 3000);
             }
         });
     </script>

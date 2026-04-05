@@ -84,41 +84,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Note: Active Nav Link is now handled natively via HTML pages.
 
-    // 6. Donation Form Logic
-    const donationForm = document.getElementById('donation-form');
-    if (donationForm) {
-        const amountBtns = document.querySelectorAll('.amount-btn');
-        const customAmountBtn = document.querySelector('.custom-amount-btn');
-        const customAmountInput = document.querySelector('.custom-amount-input');
-        const amountInput = document.getElementById('custom-amount');
+        // 6. Donation Form Logic
+        const donationForm = document.getElementById('donation-form');
+        if (donationForm) {
+            const amountBtns = document.querySelectorAll('.amount-btn');
+            const customAmountInput = document.querySelector('.custom-amount-input');
+            const amountInput = document.getElementById('custom-amount');
 
-        amountBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                amountBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
+            amountBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    amountBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
 
-                if (this.classList.contains('custom-amount-btn')) {
-                    customAmountInput.classList.remove('hidden');
-                    amountInput.focus();
-                } else {
-                    customAmountInput.classList.add('hidden');
-                }
+                    if (this.classList.contains('custom-amount-btn')) {
+                        customAmountInput.classList.remove('hidden');
+                        amountInput.focus();
+                    } else {
+                        customAmountInput.classList.add('hidden');
+                    }
+                });
             });
-        });
-
-        const paymentRadios = document.querySelectorAll('input[name="payment"]');
-        const bankDetails = document.getElementById('bank-details');
-
-        paymentRadios.forEach(radio => {
-            radio.addEventListener('change', function() {
-                if (this.value === 'bank') {
-                    bankDetails.classList.remove('hidden');
-                } else {
-                    bankDetails.classList.add('hidden');
-                }
-            });
-        });
-    }
+        }
 
     // 7. Contact Form Logic (Placeholder - Overridden directly in contact.html if Firebase present)
     const contactForm = document.getElementById('contact-form');

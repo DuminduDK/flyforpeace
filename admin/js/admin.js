@@ -165,17 +165,40 @@ async function loadDonations() {
     const querySnapshot = await getDocs(q);
     const tbody = document.getElementById('donations-table-body');
     tbody.innerHTML = '';
-    querySnapshot.forEach((doc) => {
-        const data = doc.data();
+    querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const id = docSnap.id;
         const dateStr = data.createdAt ? data.createdAt.toDate().toLocaleString() : 'N/A';
+        const slipBtn = data.slipBase64 ? 
+            `<button onclick="viewSlip('${id}')" style="background:#2ecc71;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;"><i class="fas fa-image"></i> View Slip</button>` : 
+            '<span style="color:#999 italic">No Slip</span>';
+        
         tbody.innerHTML += `<tr>
             <td>${dateStr}</td>
-            <td>Anonymous</td>
             <td><strong>$${data.amount}</strong></td>
             <td>${data.method}</td>
+            <td><span class="status-badge" style="padding:2px 8px; border-radius:12px; background:#f1c40f; color: #000; font-size:0.8rem;">${data.status || 'Pending'}</span></td>
+            <td>${slipBtn}</td>
         </tr>`;
+
+        // Cache the slip data globally for easy access
+        if (data.slipBase64) {
+            window._donationSlips = window._donationSlips || {};
+            window._donationSlips[id] = data.slipBase64;
+        }
     });
 }
+
+window.viewSlip = (id) => {
+    const base64 = window._donationSlips ? window._donationSlips[id] : null;
+    if (base64) {
+        const win = window.open();
+        win.document.write('<iframe src="' + base64  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+        win.document.title = "Payment Slip Viewer";
+    } else {
+        alert("Slip data not found or expired.");
+    }
+};
 
 // Load Messages
 async function loadMessages() {
