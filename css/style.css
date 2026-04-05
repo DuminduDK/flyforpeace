@@ -861,7 +861,7 @@ header.scrolled .logo {
 }
 
 @media (max-width: 768px) {
-    .nav-list {
+    .main-nav .nav-list {
         position: absolute;
         top: 100%;
         left: 0;
@@ -872,8 +872,8 @@ header.scrolled .logo {
         box-shadow: var(--shadow-md);
         display: none;
     }
-    .nav-list.show { display: flex; }
-    .nav-list li {
+    .main-nav .nav-list.show { display: flex; }
+    .main-nav .nav-list li {
         width: 100%;
         border-bottom: 1px solid var(--bg-light);
     }
@@ -885,6 +885,8 @@ header.scrolled .logo {
     .mobile-menu-toggle { display: block; }
     .btn-donate-nav { display: none; }
     
+    .logo { height: 70px; }
+    .hero-content { margin-top: 100px; }
     .hero-title { font-size: 2.8rem; }
     .hero-tagline { font-size: 1.4rem; }
     .hero-buttons { flex-direction: column; }
