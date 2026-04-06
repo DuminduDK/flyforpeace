@@ -33,6 +33,7 @@
                     <li><a href="index.html" class="nav-item active">Home</a></li>
                     <li><a href="about.html" class="nav-item">About</a></li>
                     <li><a href="leadership.html" class="nav-item">Leadership</a></li>
+                    <li><a href="membership.html" class="nav-item">Membership</a></li>
                     <li><a href="contact.html" class="nav-item">Contact</a></li>
                 </ul>
             </nav>
@@ -47,6 +48,9 @@
     <section id="home" class="hero">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
+            <div class="mobile-hero-logo animate-up">
+                <img src="assets/logo.png" alt="Fly for Peace Logo">
+            </div>
             <h1 class="hero-title animate-up">Fly for Peace</h1>
             <p class="hero-tagline animate-up delay-1">"Air is not for war; Air is to breathe."</p>
             <p class="hero-desc animate-up delay-2">An international Kite Air Show event promoting cultural harmony and unity.<br>
@@ -187,10 +191,35 @@
             
             <div class="footer-bottom">
                 <p>&copy; 2026 Fly for Peace – World Peace Movement. All Rights Reserved.</p>
+                <p style="margin-top: 10px; font-size: 0.85rem;">
+                    <a href="privacy-policy.html" style="color: #a0aec0; text-decoration: none; margin-right: 16px;">Privacy Policy</a>
+                    <a href="refund-policy.html" style="color: #a0aec0; text-decoration: none;">Refund Policy</a>
+                </p>
                 <p style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">Developed by <a href="https://www.linkedin.com/in/dumindudk" target="_blank" rel="noopener noreferrer" style="color: #5ca4cf; text-decoration: none; font-weight: 600;">Dumindu Koralearachchi</a></p>
             </div>
         </div>
     </footer>
+
+    <!-- News Article Modal -->
+    <div id="news-modal" class="news-modal">
+        <div class="news-modal-content">
+            <div class="news-modal-close" id="modal-close"><i class="fas fa-times"></i></div>
+            <div class="news-modal-hero" id="modal-hero"></div>
+            <div class="news-modal-body">
+                <div class="news-modal-meta">
+                    <span id="modal-tag" class="blog-card-tag" style="position: static;">Announcement</span>
+                    <span id="modal-date" class="blog-card-date" style="margin-bottom: 0;"></span>
+                </div>
+                <h2 class="news-modal-title" id="modal-title"></h2>
+                <div class="news-modal-text" id="modal-text"></div>
+                
+                <div id="modal-gallery-sec" class="news-modal-gallery" style="display: none;">
+                    <h5>Image Gallery</h5>
+                    <div class="gallery-grid" id="modal-gallery"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Custom JS -->
     <script src="js/script.js"></script>
@@ -202,48 +231,99 @@
                 const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
                 const snapshot = await getDocs(q);
                 const grid = document.querySelector('.news-grid');
+                window._newsCache = {};
                 
                 if(!snapshot.empty) {
-                    grid.innerHTML = ''; // clear static demo blocks
-                    snapshot.forEach(doc => {
-                        const data = doc.data();
+                    grid.innerHTML = '';
+                    snapshot.forEach(docSnap => {
+                        const data = docSnap.data(), id = docSnap.id;
+                        window._newsCache[id] = data;
                         
-                        // Parse date picker format (YYYY-MM-DD) natively
                         let formattedDate = data.dateLabel;
                         if (formattedDate && formattedDate.includes('-')) {
                             const dateObj = new Date(formattedDate + 'T00:00:00');
-                            const options = { month: 'long', day: 'numeric', year: 'numeric' };
-                            formattedDate = dateObj.toLocaleDateString('en-US', options);
+                            formattedDate = dateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
                         }
 
-                        // Parse Canvas Base64 vs Fallback
-                        let imageHTML = '';
-                        if (data.imageBase64) {
-                            imageHTML = `<img src="${data.imageBase64}" alt="${data.title}" style="width: 100%; height: 100%; object-fit: cover;">`;
-                        } else {
-                            imageHTML = `<div style="width: 100%; height: 100%; display:flex; align-items:center; justify-content:center;">
-                                <i class="fas fa-newspaper fa-3x" style="color:white;"></i>
-                            </div>`;
-                        }
+                        const coverImg = data.imageBase64 || (data.images && data.images[0]) || '';
+                        const imageHTML = coverImg 
+                            ? `<img src="${coverImg}" alt="${data.title}">`
+                            : `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#f1f5f9; color:#cbd5e1;"><i class="fas fa-newspaper fa-4x"></i></div>`;
                         
                         grid.innerHTML += `
-                        <div class="news-card animate-on-scroll" style="opacity:1; transform:translateY(0);">
-                            <div class="news-img" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); overflow: hidden; height: 160px;">
+                        <div class="blog-card animate-on-scroll" onclick="openNewsModal('${id}')">
+                            <div class="blog-card-img-wrap">
+                                <span class="blog-card-tag">${data.category || 'Announcement'}</span>
                                 ${imageHTML}
                             </div>
-                            <div class="news-content">
-                                <div class="news-date">${formattedDate}</div>
+                            <div class="blog-card-content">
+                                <div class="blog-card-date"><i class="far fa-calendar-alt"></i> ${formattedDate}</div>
                                 <h4>${data.title}</h4>
                                 <p>${data.content}</p>
-                                <a href="about.html" class="read-more">Learn More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            <div class="blog-card-footer">
+                                <span class="read-more-btn">Read Full Story <i class="fas fa-arrow-right"></i></span>
                             </div>
                         </div>`;
                     });
+
+                    // Trigger observer for new cards
+                    if (window.scrollObserver) {
+                        document.querySelectorAll('.news-grid .animate-on-scroll').forEach(el => {
+                            window.scrollObserver.observe(el);
+                        });
+                    }
                 }
             } catch(err) {
                 console.error("Error fetching news: ", err);
             }
         }
+
+        window.openNewsModal = (id) => {
+            const data = window._newsCache[id];
+            if (!data) return;
+
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-tag').innerText = data.category || 'Announcement';
+            document.getElementById('modal-text').innerText = data.content;
+            
+            let formattedDate = data.dateLabel;
+            if (formattedDate && formattedDate.includes('-')) {
+                const dateObj = new Date(formattedDate + 'T00:00:00');
+                formattedDate = dateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            }
+            document.getElementById('modal-date').innerHTML = `<i class="far fa-calendar-alt"></i> ${formattedDate}`;
+
+            const coverImg = data.imageBase64 || (data.images && data.images[0]) || '';
+            document.getElementById('modal-hero').innerHTML = coverImg ? `<img src="${coverImg}" alt="${data.title}">` : '';
+
+            // Gallery
+            const gallerySec = document.getElementById('modal-gallery-sec');
+            const galleryGrid = document.getElementById('modal-gallery');
+            if (data.images && data.images.length > 1) {
+                gallerySec.style.display = 'block';
+                galleryGrid.innerHTML = data.images.map((img, i) => `
+                    <div class="gallery-item" onclick="event.stopPropagation(); window.open('${img}', '_blank')">
+                        <img src="${img}" alt="Gallery ${i+1}">
+                    </div>
+                `).join('');
+            } else {
+                gallerySec.style.display = 'none';
+            }
+
+            document.getElementById('news-modal').classList.add('active');
+            document.body.style.overflow = 'hidden'; // prevent scroll
+        };
+
+        const closeModal = () => {
+            document.getElementById('news-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        document.getElementById('modal-close').addEventListener('click', closeModal);
+        document.getElementById('news-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('news-modal')) closeModal();
+        });
         
         fetchNews();
     </script>

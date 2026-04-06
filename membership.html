@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join the Fly for Peace Peace Membership — become a Local or International member and support the global peace movement.">
+    <title>Peace Membership | Fly for Peace</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+
+    <style>
+        /* ── Membership Page Specific Styles ── */
+
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f7e98e;
+            --platinum: #e5e5e5;
+            --local-color: #2ecc71;
+            --local-dark: #27ae60;
+            --intl-color: #5ca4cf;
+        }
+
+        /* Hero Banner */
+        .membership-hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e4d7b 50%, var(--primary-color) 100%);
+            padding: 160px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .membership-hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='rgba(255,255,255,0.06)'/%3E%3C/svg%3E");
+        }
+        .membership-hero h1 {
+            font-size: 3.8rem;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            margin-bottom: 18px;
+        }
+        .membership-hero p {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.85);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        .membership-hero .badge-row {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .hero-badge {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 600;
+            backdrop-filter: blur(6px);
+        }
+
+        /* ── Type Selector ── */
+        .type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding: 60px 20px 40px;
+        }
+        .type-card {
+            width: 320px;
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            border: 3px solid transparent;
+            background: #fff;
+            box-shadow: var(--shadow-md);
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .type-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+        }
+        .type-card.local::before   { background: linear-gradient(90deg, var(--local-color), #82e0aa); }
+        .type-card.intl::before    { background: linear-gradient(90deg, var(--intl-color), var(--gold)); }
+        .type-card:hover, .type-card.selected {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .type-card.local.selected  { border-color: var(--local-color); }
+        .type-card.intl.selected   { border-color: var(--intl-color); }
+        .type-icon {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 22px;
+        }
+        .type-card.local .type-icon { background: rgba(46,204,113,0.12); color: var(--local-color); }
+        .type-card.intl  .type-icon { background: rgba(92,164,207,0.12); color: var(--intl-color); }
+        .type-card h3 { font-size: 1.6rem; margin-bottom: 10px; color: var(--primary-dark); }
+        .type-card p  { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+        .type-badge {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            font-family: var(--font-heading);
+        }
+        .type-card.local .type-badge { background: rgba(46,204,113,0.12); color: var(--local-dark); }
+        .type-card.intl  .type-badge { background: rgba(92,164,207,0.12); color: var(--primary-dark); }
+        .select-indicator {
+            margin-top: 22px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .type-card.local  .select-indicator { color: var(--local-color); }
+        .type-card.intl   .select-indicator { color: var(--intl-color); }
+        .type-card.selected .select-indicator { opacity: 1; }
+
+        /* ── Form Panels ── */
+        .form-panel {
+            display: none;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+            animation: fadeSlide 0.45s ease forwards;
+        }
+        .form-panel.active { display: block; }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sub-type Tier Cards (International) */
+        .tier-selector {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .tier-card {
+            flex: 1;
+            min-width: 170px;
+            max-width: 200px;
+            border-radius: 18px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid var(--border-color);
+            background: #fff;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .tier-card:hover       { border-color: var(--primary-color); transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .tier-card.selected    { border-color: var(--primary-color); background: #e8f4fd; box-shadow: var(--shadow-md); }
+        .tier-card .check-mark {
+            position: absolute; top: 12px; right: 14px;
+            color: var(--primary-color); opacity: 0; font-size: 1.1rem;
+            transition: opacity 0.2s;
+        }
+        .tier-card.selected .check-mark { opacity: 1; }
+        .tier-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            font-family: var(--font-heading);
+            line-height: 1;
+        }
+        .tier-currency {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .tier-card h4 {
+            font-size: 1rem;
+            margin: 12px 0 8px;
+            color: var(--primary-dark);
+        }
+        .tier-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.4;
+        }
+        .tier-ribbon {
+            background: var(--gold);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: var(--shadow-lg);
+            border-top: 5px solid var(--primary-color);
+        }
+        .form-card h2 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .form-card .form-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            font-size: 0.95rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-group { margin-bottom: 22px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 0.9rem;
+        }
+        .form-group label .req { color: var(--secondary-color); margin-left: 2px; }
+        .form-control {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+            background: #f9fafb;
+            color: var(--text-main);
+        }
+        .form-control:focus {
+            border-color: var(--primary-color);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(92,164,207,0.15);
+        }
+        .form-control.file-input { padding: 10px 16px; cursor: pointer; }
+
+        /* Local price row */
+        .local-price-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .local-price-option {
+            flex: 1;
+            min-width: 140px;
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .local-price-option:hover { border-color: var(--local-color); transform: translateY(-3px); }
+        .local-price-option.selected { border-color: var(--local-color); background: rgba(46,204,113,0.08); }
+        .local-price-option .price-val {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            font-family: var(--font-heading);
+        }
+        .local-price-option .price-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .custom-amount-wrap { margin-bottom: 22px; }
+        .custom-amount-wrap label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .amount-inp-row {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+            background: #f9fafb;
+        }
+        .amount-inp-row:focus-within { border-color: var(--primary-color); background: #fff; box-shadow: 0 0 0 3px rgba(92,164,207,0.15); }
+        .amount-prefix {
+            padding: 13px 16px;
+            background: var(--bg-light);
+            font-weight: 700;
+            color: var(--text-muted);
+            border-right: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+        .amount-inp-row input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 13px 14px;
+            font-size: 1rem;
+            background: transparent;
+            font-family: var(--font-body);
+        }
+
+        /* Payment Summary Box */
+        .payment-summary {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e4d7b 100%);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 30px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .payment-summary .ps-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+        .payment-summary .ps-amount {
+            font-size: 2.2rem;
+            font-weight: 800;
+            font-family: var(--font-heading);
+        }
+        .payment-summary .ps-gateway {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 12px 20px;
+        }
+        .payment-summary .ps-gateway i { font-size: 1.4rem; }
+        .payment-summary .ps-gateway span { font-size: 0.85rem; font-weight: 600; }
+
+        /* Submit Button */
+        .btn-submit-membership {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.15rem;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: #fff;
+            border: none;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(92,164,207,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-submit-membership:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(21,60,94,0.4);
+        }
+        .btn-submit-membership.local-theme {
+            background: linear-gradient(135deg, var(--local-color), var(--local-dark));
+            box-shadow: 0 6px 20px rgba(46,204,113,0.4);
+        }
+        .btn-submit-membership.local-theme:hover {
+            box-shadow: 0 10px 30px rgba(39,174,96,0.4);
+        }
+
+        /* Section heading inside form */
+        .form-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Success Message */
+        .success-overlay {
+            display: none;
+            text-align: center;
+            padding: 60px 30px;
+        }
+        .success-overlay.show { display: block; }
+        .success-icon {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--local-color), #82e0aa);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem;
+            color: #fff;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 30px rgba(46,204,113,0.4);
+        }
+
+        /* Divider */
+        .or-divider {
+            text-align: center;
+            position: relative;
+            margin: 30px 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        .or-divider::before, .or-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 44%;
+            height: 1px;
+            background: var(--border-color);
+        }
+        .or-divider::before { left: 0; }
+        .or-divider::after  { right: 0; }
+
+        /* Notes */
+        .info-note {
+            background: rgba(92,164,207,0.08);
+            border-left: 4px solid var(--primary-color);
+            padding: 14px 18px;
+            border-radius: 0 10px 10px 0;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        .info-note strong { color: var(--primary-dark); }
+
+        /* Step Indicator */
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 40px;
+        }
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .step-num {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            border: 2px solid var(--border-color);
+            background: #fff;
+            color: var(--text-muted);
+            transition: all 0.3s;
+        }
+        .step.done .step-num   { background: var(--primary-color); border-color: var(--primary-color); color: #fff; }
+        .step.active .step-num { background: var(--primary-dark); border-color: var(--primary-dark); color: #fff; box-shadow: 0 0 0 4px rgba(92,164,207,0.2); }
+        .step-label {
+            font-size: 0.75rem;
+            margin-top: 6px;
+            color: var(--text-muted);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .step.active .step-label { color: var(--primary-dark); }
+        .step-line {
+            width: 60px;
+            height: 2px;
+            background: var(--border-color);
+            margin: 0;
+            position: relative;
+            top: -13px;
+        }
+        .step-line.done { background: var(--primary-color); }
+
+        @media (max-width: 768px) {
+            .membership-hero h1 { font-size: 2.4rem; }
+            .form-card { padding: 28px 20px; }
+            .form-row  { grid-template-columns: 1fr; }
+            .tier-card { max-width: 100%; }
+            .payment-summary { flex-direction: column; text-align: center; }
+            .type-selector { gap: 20px; }
+            .type-card { width: 100%; max-width: 400px; }
+            .step-line { width: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Nav -->
+    <header id="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo.png" alt="Fly for Peace" class="logo">
+            </a>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-item">Home</a></li>
+                    <li><a href="about.html" class="nav-item">About</a></li>
+                    <li><a href="leadership.html" class="nav-item">Leadership</a></li>
+                    <li><a href="membership.html" class="nav-item active">Membership</a></li>
+                    <li><a href="contact.html" class="nav-item">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-actions">
+                <div class="mobile-menu-toggle"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <div class="membership-hero">
+        <div class="container">
+            <h1 class="animate-up"><i class="fas fa-dove" style="color: rgba(255,255,255,0.8); margin-right:12px;"></i>Peace Membership</h1>
+            <p class="animate-up delay-1">Join the global family dedicated to cultural harmony and peacful coexistence. Choose your membership and be part of the movement.</p>
+            <div class="badge-row animate-up delay-2">
+                <span class="hero-badge"><i class="fas fa-flag" style="margin-right:6px;"></i>Local Member</span>
+                <span class="hero-badge"><i class="fas fa-globe" style="margin-right:6px;"></i>International Member</span>
+                <span class="hero-badge"><i class="fas fa-shield-halved" style="margin-right:6px;"></i>PayHere Secured</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="section" style="padding-top: 0;">
+        <div class="container">
+
+            <!-- Step 1: Choose Membership Type -->
+            <div id="step-type-selection">
+                <div class="section-header text-center animate-on-scroll" style="margin-bottom: 10px;">
+                    <h2 style="color: var(--primary-dark);">Choose Your Membership</h2>
+                    <div class="divider"></div>
+                    <p class="section-subtitle">Select the membership category that best represents you</p>
+                </div>
+
+                <div class="type-selector">
+                    <!-- Local Member -->
+                    <div class="type-card local animate-on-scroll" id="card-local" onclick="selectType('local')">
+                        <div class="type-icon"><i class="fas fa-home"></i></div>
+                        <h3>Local Member</h3>
+                        <p>For residents in Sri Lanka who wish to join the Fly for Peace movement locally and make a meaningful impact in their community.</p>
+                        <span class="type-badge"><i class="fas fa-rupee-sign" style="margin-right:5px;"></i>LKR 1,000 onwards</span>
+                        <div class="select-indicator"><i class="fas fa-check-circle" style="margin-right:6px;"></i>Selected</div>
+                    </div>
+                    <!-- International Member -->
+                    <div class="type-card intl animate-on-scroll" id="card-intl" onclick="selectType('intl')">
+                        <div class="type-icon"><i class="fas fa-globe-americas"></i></div>
+                        <h3>International Member</h3>
+                        <p>For global citizens outside Sri Lanka who want to champion world peace and cultural harmony on an international stage.</p>
+                        <span class="type-badge"><i class="fas fa-dollar-sign" style="margin-right:5px;"></i>From $2 USD</span>
+                        <div class="select-indicator"><i class="fas fa-check-circle" style="margin-right:6px;"></i>Selected</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══════════ LOCAL MEMBER PANEL ══════════ -->
+            <div class="form-panel" id="panel-local">
+                <div class="form-card">
+                    <h2><i class="fas fa-home" style="color: var(--local-color); margin-right:10px;"></i>Local Membership Registration</h2>
+                    <p class="form-subtitle">Complete the form below to register as a Local Member of Fly for Peace.</p>
+
+                    <div class="info-note">
+                        <strong>Payment Notice:</strong> After submitting the form, you will be securely redirected to PayHere to complete your payment in <strong>Sri Lankan Rupees (LKR)</strong>. Your membership will be activated once the payment is confirmed.
+                    </div>
+
+                    <!-- Fee Selection -->
+                    <div class="form-section-title"><i class="fas fa-tag"></i> Membership Fee</div>
+                    <div class="local-price-row" id="local-price-row">
+                        <div class="local-price-option selected" onclick="selectLocalFee(1000, this)">
+                            <div class="price-val">1,000</div>
+                            <div class="price-label">LKR — Standard</div>
+                        </div>
+                        <div class="local-price-option" onclick="selectLocalFee(2500, this)">
+                            <div class="price-val">2,500</div>
+                            <div class="price-label">LKR — Supporter</div>
+                        </div>
+                        <div class="local-price-option" onclick="selectLocalFee(5000, this)">
+                            <div class="price-val">5,000</div>
+                            <div class="price-label">LKR — Champion</div>
+                        </div>
+                    </div>
+
+                    <div class="or-divider">or enter a custom amount</div>
+
+                    <div class="custom-amount-wrap">
+                        <label>Custom Amount (Minimum LKR 1,000)</label>
+                        <div class="amount-inp-row">
+                            <span class="amount-prefix">LKR</span>
+                            <input type="number" id="local-custom-amount" placeholder="e.g. 3000" min="1000" oninput="setCustomLocalFee(this.value)">
+                        </div>
+                    </div>
+
+                    <form id="local-form" onsubmit="submitLocalForm(event)">
+                        <input type="hidden" id="local-fee-hidden" value="1000">
+
+                        <!-- Personal Info -->
+                        <div class="form-section-title"><i class="fas fa-user"></i> Personal Information</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name <span class="req">*</span></label>
+                                <input type="text" class="form-control" id="local-name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address <span class="req">*</span></label>
+                                <input type="email" class="form-control" id="local-email" placeholder="you@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>WhatsApp Number <span class="req">*</span></label>
+                                <input type="tel" class="form-control" id="local-whatsapp" placeholder="+94 7X XXX XXXX" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Other Phone Number</label>
+                                <input type="tel" class="form-control" id="local-phone" placeholder="+94 1X XXX XXXX">
+                            </div>
+                        </div>
+
+                        <!-- Location Info -->
+                        <div class="form-section-title"><i class="fas fa-map-marker-alt"></i> Location Details</div>
+                        <div class="form-group">
+                            <label>District <span class="req">*</span></label>
+                            <select class="form-control" id="local-district" required>
+                                <option value="" disabled selected>Select your district</option>
+                                <option>Ampara</option><option>Anuradhapura</option><option>Badulla</option>
+                                <option>Batticaloa</option><option>Colombo</option><option>Galle</option>
+                                <option>Gampaha</option><option>Hambantota</option><option>Jaffna</option>
+                                <option>Kalutara</option><option>Kandy</option><option>Kegalle</option>
+                                <option>Kilinochchi</option><option>Kurunegala</option><option>Mannar</option>
+                                <option>Matale</option><option>Matara</option><option>Monaragala</option>
+                                <option>Mullaitivu</option><option>Nuwara Eliya</option><option>Polonnaruwa</option>
+                                <option>Puttalam</option><option>Ratnapura</option><option>Trincomalee</option><option>Vavuniya</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Local Address <span class="req">*</span></label>
+                            <textarea class="form-control" id="local-address" rows="3" placeholder="Street, City, Postal Code" required></textarea>
+                        </div>
+
+                        <!-- Payment Summary -->
+                        <div class="payment-summary">
+                            <div>
+                                <div class="ps-label">Membership Fee</div>
+                                <div class="ps-amount" id="local-summary-amount">LKR 1,000</div>
+                            </div>
+                            <div class="ps-gateway">
+                                <i class="fas fa-lock"></i>
+                                <div>
+                                    <div style="font-size:0.7rem; opacity:0.7;">Secured by</div>
+                                    <span>PayHere Payment Gateway</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-submit-membership local-theme">
+                            <i class="fas fa-credit-card"></i>
+                            Proceed to Payment — LKR <span id="local-btn-amt">1,000</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ══════════ INTERNATIONAL MEMBER PANEL ══════════ -->
+            <div class="form-panel" id="panel-intl">
+                <div class="form-card">
+                    <h2><i class="fas fa-globe-americas" style="color: var(--intl-color); margin-right:10px;"></i>International Membership Registration</h2>
+                    <p class="form-subtitle">Complete the form to register as an International Member of Fly for Peace.</p>
+
+                    <div class="info-note">
+                        <strong>Payment Notice:</strong> After submitting, you will be securely redirected to PayHere to complete your payment in <strong>US Dollars (USD)</strong>. Your membership will be activated upon payment confirmation.
+                    </div>
+
+                    <!-- Tier Selection -->
+                    <div class="form-section-title"><i class="fas fa-layer-group"></i> Select Your Membership Tier</div>
+                    <div class="tier-selector" id="intl-tier-selector">
+                        <!-- Ordinary -->
+                        <div class="tier-card" onclick="selectTier('ordinary', this)" id="tier-ordinary">
+                            <i class="fas fa-check-circle check-mark"></i>
+                            <div class="tier-price">$2</div>
+                            <div class="tier-currency">USD / year</div>
+                            <h4>Ordinary Member</h4>
+                            <p>Join the movement and show your country's support</p>
+                        </div>
+                        <!-- State -->
+                        <div class="tier-card" onclick="selectTier('state', this)" id="tier-state">
+                            <i class="fas fa-check-circle check-mark"></i>
+                            <div class="tier-ribbon">Popular</div>
+                            <div class="tier-price">$5</div>
+                            <div class="tier-currency">USD / year</div>
+                            <h4>State Member</h4>
+                            <p>Represent your state on the global peace stage</p>
+                        </div>
+                        <!-- Country -->
+                        <div class="tier-card" onclick="selectTier('country', this)" id="tier-country">
+                            <i class="fas fa-check-circle check-mark"></i>
+                            <div class="tier-ribbon" style="background: var(--gold);">Premium</div>
+                            <div class="tier-price">$10</div>
+                            <div class="tier-currency">USD / year</div>
+                            <h4>Country Member</h4>
+                            <p>Be the official country representative for peace</p>
+                        </div>
+                    </div>
+
+                    <form id="intl-form" onsubmit="submitIntlForm(event)">
+                        <input type="hidden" id="intl-tier-hidden" value="">
+                        <input type="hidden" id="intl-fee-hidden" value="">
+
+                        <!-- Personal Info -->
+                        <div class="form-section-title"><i class="fas fa-user"></i> Personal Information</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name <span class="req">*</span></label>
+                                <input type="text" class="form-control" id="intl-name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address <span class="req">*</span></label>
+                                <input type="email" class="form-control" id="intl-email" placeholder="you@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp Number <span class="req">*</span></label>
+                            <input type="tel" class="form-control" id="intl-whatsapp" placeholder="+1 XXX XXX XXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Profile Photo <span class="req">*</span></label>
+                            <input type="file" class="form-control file-input" id="intl-photo" accept="image/*" required>
+                            <small style="color: var(--text-muted); margin-top: 5px; display: block;">Upload a clear, recent photo (JPEG/PNG, max 5MB)</small>
+                        </div>
+
+                        <!-- Dynamic Location Fields -->
+                        <div id="field-country" class="form-group" style="display:none;">
+                            <div class="form-section-title"><i class="fas fa-globe"></i> Location Details</div>
+                            <label>Country <span class="req">*</span></label>
+                            <input type="text" class="form-control" id="intl-country" placeholder="Enter your country">
+                        </div>
+                        <div id="field-state" class="form-group" style="display:none;">
+                            <label>State / Province <span class="req">*</span></label>
+                            <input type="text" class="form-control" id="intl-state" placeholder="Enter your state or province">
+                        </div>
+
+                        <!-- Payment Summary -->
+                        <div class="payment-summary" id="intl-payment-summary" style="display:none;">
+                            <div>
+                                <div class="ps-label">Membership Fee</div>
+                                <div class="ps-amount" id="intl-summary-amount">—</div>
+                            </div>
+                            <div class="ps-gateway">
+                                <i class="fas fa-lock"></i>
+                                <div>
+                                    <div style="font-size:0.7rem; opacity:0.7;">Secured by</div>
+                                    <span>PayHere Payment Gateway</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-submit-membership" id="intl-submit-btn" style="display:none;">
+                            <i class="fas fa-credit-card"></i>
+                            Proceed to Payment — <span id="intl-btn-amt">—</span>
+                        </button>
+
+                        <p id="intl-select-tip" style="text-align:center; color:var(--text-muted); font-size:0.9rem; padding: 20px 0;">
+                            <i class="fas fa-arrow-up" style="margin-right:6px;"></i>Please select a membership tier above to continue.
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo-text footer-logo">Fly for Peace</div>
+                    <p>A global initiative promoting unity, harmony, and peaceful coexistence. Air is not for war; Air is to breathe.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons-footer">
+                        <a href="https://web.facebook.com/profile.php?id=61573327524448" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/flyforpeacex" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.instagram.com/flyforpeaceofficial" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/flyforpeace" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Fly for Peace – World Peace Movement. All Rights Reserved.</p>
+                <p style="margin-top: 10px; font-size: 0.85rem;">
+                    <a href="privacy-policy.html" style="color: #a0aec0; text-decoration: none; margin-right: 16px;">Privacy Policy</a>
+                    <a href="refund-policy.html" style="color: #a0aec0; text-decoration: none;">Refund Policy</a>
+                </p>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">Developed by <a href="https://www.linkedin.com/in/dumindudk" target="_blank" rel="noopener noreferrer" style="color: #5ca4cf; text-decoration: none; font-weight: 600;">Dumindu Koralearachchi</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PayHere SDK -->
+    <script src="https://www.payhere.lk/lib/payhere.js"></script>
+    <!-- Firebase module bridge -->
+    <script type="module" id="membership-firebase-module">
+        import { db, collection, addDoc, Timestamp } from './js/firebase-config.js';
+        window._ffpDB = db;
+        window._ffpAddDoc = addDoc;
+        window._ffpCollection = collection;
+        window._ffpTimestamp = Timestamp;
+    </script>
+    <script src="js/script.js"></script>
+
+    <script>
+        // ── Config ──
+        const PAYHERE_MERCHANT_ID  = "YOUR_MERCHANT_ID";
+        const PAYHERE_NOTIFY_URL   = "https://flyforpeace.rakasl.com/payhere-notify";
+        const PAYHERE_RETURN_URL   = window.location.origin + "/membership.html?status=success";
+        const PAYHERE_CANCEL_URL   = window.location.origin + "/membership.html?status=cancel";
+        const ADMIN_EMAIL          = "flyforpeaceinfo@gmail.com";
+
+        // ── State ──
+        let currentType     = null;  // 'local' | 'intl'
+        let currentLocalFee = 1000;
+        let currentIntlTier = null;  // 'ordinary' | 'state' | 'country'
+        const TIER_FEES = { ordinary: 2, state: 5, country: 10 };
+
+        // ── Type Selection ──
+        function selectType(type) {
+            currentType = type;
+
+            document.getElementById('card-local').classList.toggle('selected', type === 'local');
+            document.getElementById('card-intl').classList.toggle('selected', type === 'intl');
+
+            document.getElementById('panel-local').classList.toggle('active', type === 'local');
+            document.getElementById('panel-intl').classList.toggle('active', type === 'intl');
+
+            // Scroll to form
+            setTimeout(() => {
+                const panel = document.getElementById('panel-' + type);
+                panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        // ── Local Fee ──
+        function selectLocalFee(amount, el) {
+            currentLocalFee = amount;
+            document.querySelectorAll('.local-price-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            document.getElementById('local-custom-amount').value = '';
+            updateLocalUI(amount);
+        }
+
+        function setCustomLocalFee(val) {
+            const amount = parseInt(val) || 0;
+            if (amount >= 1000) {
+                currentLocalFee = amount;
+                document.querySelectorAll('.local-price-option').forEach(o => o.classList.remove('selected'));
+                updateLocalUI(amount);
+            }
+        }
+
+        function updateLocalUI(amount) {
+            document.getElementById('local-fee-hidden').value = amount;
+            document.getElementById('local-summary-amount').textContent = 'LKR ' + amount.toLocaleString();
+            document.getElementById('local-btn-amt').textContent = amount.toLocaleString();
+        }
+
+        // ── International Tier ──
+        function selectTier(tier, el) {
+            currentIntlTier = tier;
+            const fee = TIER_FEES[tier];
+
+            // Highlight selected card
+            document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+
+            // Store hidden values
+            document.getElementById('intl-tier-hidden').value = tier;
+            document.getElementById('intl-fee-hidden').value  = fee;
+
+            // Show/hide dynamic location fields
+            const showCountry = (tier === 'country' || tier === 'ordinary' || tier === 'state');
+            const showState   = (tier === 'state');
+
+            document.getElementById('field-country').style.display = showCountry ? 'block' : 'none';
+            document.getElementById('field-state').style.display   = showState   ? 'block' : 'none';
+
+            // Make required
+            document.getElementById('intl-country').required = showCountry;
+            document.getElementById('intl-state').required   = showState;
+
+            // Update summaries
+            document.getElementById('intl-summary-amount').textContent = '$' + fee + ' USD';
+            document.getElementById('intl-btn-amt').textContent = '$' + fee + ' USD';
+
+            // Show payment area
+            document.getElementById('intl-payment-summary').style.display = 'flex';
+            document.getElementById('intl-submit-btn').style.display      = 'flex';
+            document.getElementById('intl-select-tip').style.display      = 'none';
+        }
+
+        async function submitLocalForm(e) {
+            e.preventDefault();
+
+            const photoFile = null; // local members don't upload photos
+
+            const data = {
+                name:     document.getElementById('local-name').value,
+                email:    document.getElementById('local-email').value,
+                whatsapp: document.getElementById('local-whatsapp').value,
+                phone:    document.getElementById('local-phone').value,
+                district: document.getElementById('local-district').value,
+                address:  document.getElementById('local-address').value,
+                amount:   currentLocalFee,
+                type:     'Local Member',
+            };
+
+            launchPayhere({ ...data, currency: 'LKR', amountDisplay: 'LKR ' + data.amount.toLocaleString() }, null);
+        }
+
+        async function submitIntlForm(e) {
+            e.preventDefault();
+
+            if (!currentIntlTier) { alert('Please select a membership tier.'); return; }
+
+            const tierLabels = { ordinary: 'Ordinary Member', state: 'State Member', country: 'Country Member' };
+            const fee = TIER_FEES[currentIntlTier];
+
+            // Convert photo to base64
+            let photoBase64 = null;
+            const photoInput = document.getElementById('intl-photo');
+            if (photoInput.files && photoInput.files[0]) {
+                photoBase64 = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            const MAX = 400;
+                            let w = img.width, h = img.height;
+                            if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+                            canvas.width = w; canvas.height = h;
+                            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                            resolve(canvas.toDataURL('image/jpeg', 0.75));
+                        };
+                        img.src = ev.target.result;
+                    };
+                    reader.readAsDataURL(photoInput.files[0]);
+                });
+            }
+
+            const data = {
+                name:     document.getElementById('intl-name').value,
+                email:    document.getElementById('intl-email').value,
+                whatsapp: document.getElementById('intl-whatsapp').value,
+                country:  document.getElementById('intl-country').value,
+                state:    document.getElementById('intl-state').value,
+                amount:   fee,
+                type:     'International Member — ' + tierLabels[currentIntlTier],
+            };
+
+            launchPayhere({ ...data, currency: 'USD', amountDisplay: '$' + fee + ' USD' }, photoBase64);
+        }
+
+        // ── PayHere Integration ──
+        async function saveToFirestore(data, photoBase64) {
+            try {
+                const db  = window._ffpDB;
+                const col = window._ffpCollection;
+                const add = window._ffpAddDoc;
+                const TS  = window._ffpTimestamp;
+                if (!db) return;
+                await add(col(db, "members"), {
+                    name:        data.name,
+                    email:       data.email,
+                    whatsapp:    data.whatsapp,
+                    phone:       data.phone        || null,
+                    country:     data.country      || null,
+                    state:       data.state        || null,
+                    district:    data.district     || null,
+                    address:     data.address      || null,
+                    memberType:  data.type,
+                    amount:      data.amount,
+                    currency:    data.currency,
+                    photoBase64: photoBase64       || null,
+                    createdAt:   TS.now(),
+                });
+                console.log('✅ Member saved to Firestore');
+            } catch(err) {
+                console.warn('Firestore save error:', err);
+            }
+        }
+
+        const RESEND_API_KEY = "re_GqjoHFsi_KVtDoA5GevTmmntk9i9KgfMu";
+        const FROM_ADDRESS   = "noreply@webmindr.online";
+        const CORS_PROXY     = "https://corsproxy.io/?";
+
+        async function resendEmail(to, subject, html) {
+            try {
+                await fetch(CORS_PROXY + "https://api.resend.com/emails", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${RESEND_API_KEY}` },
+                    body: JSON.stringify({ from: FROM_ADDRESS, to: Array.isArray(to) ? to : [to], subject, html }),
+                });
+                console.log("✅ Email sent to:", to);
+            } catch(err) {
+                console.warn("❌ Email send error:", err);
+            }
+        }
+
+        async function sendMemberEmails(data) {
+            const memberHTML = membershipConfirmationHTML(data.name, data.type, data.amount, data.currency);
+            const extraRows = [
+                data.country  ? `<div class="card-row"><span class="card-label">Country</span><span class="card-val">${data.country}</span></div>` : '',
+                data.state    ? `<div class="card-row"><span class="card-label">State</span><span class="card-val">${data.state}</span></div>` : '',
+                data.district ? `<div class="card-row"><span class="card-label">District</span><span class="card-val">${data.district}</span></div>` : '',
+            ].join('');
+            const adminHTML = membershipAdminNotifHTML(data.name, data.email, data.type, data.amount, data.currency, extraRows);
+
+            await resendEmail(data.email, '🕊️ Welcome to Fly for Peace — Membership Confirmed', memberHTML);
+            await resendEmail(ADMIN_EMAIL, `[Admin] New Member: ${data.name} — ${data.type}`, adminHTML);
+        }
+
+        function membershipConfirmationHTML(name, memberType, amount, currency) {
+            return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+body{margin:0;padding:0;background:#f0f4f8;font-family:'Segoe UI',Arial,sans-serif;}
+.wrap{max-width:620px;margin:40px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.10);}
+.hdr{background:linear-gradient(135deg,#153c5e,#5ca4cf);padding:48px 40px 36px;text-align:center;}
+.hdr h1{color:#fff;margin:0;font-size:2rem;}.hdr p{color:rgba(255,255,255,.85);margin:8px 0 0;}
+.body{padding:40px;}
+.card{background:linear-gradient(135deg,#e8f4fd,#f0f9ff);border-radius:12px;padding:28px;margin:24px 0;border-left:5px solid #5ca4cf;}
+.card-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(92,164,207,.15);}
+.card-row:last-child{border-bottom:none;}
+.card-label{color:#666;font-size:.9rem;}.card-val{color:#153c5e;font-weight:700;font-size:.95rem;}
+.hl{background:linear-gradient(135deg,#153c5e,#5ca4cf);color:#fff;border-radius:10px;padding:20px 28px;text-align:center;margin:24px 0;}
+.hl p{margin:0;font-size:1rem;opacity:.9;}.hl strong{display:block;font-size:1.5rem;margin-bottom:4px;}
+.fnote{font-size:.85rem;color:#888;text-align:center;margin-top:30px;line-height:1.6;}
+.fbar{background:#0f172a;padding:24px 40px;text-align:center;}
+.fbar p{color:#64748b;font-size:.82rem;margin:4px 0;}.fbar a{color:#5ca4cf;text-decoration:none;}
+</style></head><body>
+<div class="wrap">
+<div class="hdr"><h1>🕊️ Fly for Peace</h1><p>Peace Membership Confirmation</p></div>
+<div class="body">
+<p>Dear <strong>${name}</strong>,</p>
+<p>Thank you for joining <strong>Fly for Peace</strong>! Your membership registration has been received.</p>
+<div class="card">
+<div class="card-row"><span class="card-label">Member Name</span><span class="card-val">${name}</span></div>
+<div class="card-row"><span class="card-label">Membership Type</span><span class="card-val">${memberType}</span></div>
+<div class="card-row"><span class="card-label">Amount Paid</span><span class="card-val">${currency} ${amount}</span></div>
+<div class="card-row"><span class="card-label">Status</span><span class="card-val" style="color:#27ae60;">✓ Payment Confirmed</span></div>
+</div>
+<div class="hl"><p>What happens next?</p><strong>A team member will contact you shortly</strong><p>We'll share your exclusive membership benefits and onboarding details soon.</p></div>
+<p style="color:#555;line-height:1.7;">Follow us on social media and spread the word about Peace! Together, we make the sky a canvas of unity.</p>
+<p class="fnote">Questions? <a href="mailto:flyforpeaceinfo@gmail.com" style="color:#5ca4cf;">flyforpeaceinfo@gmail.com</a></p>
+</div>
+<div class="fbar"><p>&copy; 2026 Fly for Peace &ndash; World Peace Movement.</p><p><a href="https://flyforpeace.rakasl.com">flyforpeace.rakasl.com</a></p></div>
+</div></body></html>`;
+        }
+
+        function membershipAdminNotifHTML(name, email, memberType, amount, currency, extraRows) {
+            return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+body{margin:0;padding:0;background:#f0f4f8;font-family:'Segoe UI',Arial,sans-serif;}
+.wrap{max-width:560px;margin:40px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.hdr{background:linear-gradient(135deg,#153c5e,#e74c3c);padding:30px 36px;text-align:center;}
+.hdr h1{color:#fff;margin:0;font-size:1.5rem;}.hdr p{color:rgba(255,255,255,.8);margin:6px 0 0;}
+.body{padding:32px 36px;}
+.badge{background:#e74c3c;color:#fff;padding:4px 14px;border-radius:20px;font-size:.82rem;font-weight:700;display:inline-block;margin-bottom:16px;}
+.card{background:#f8fafc;border-radius:12px;padding:20px;border:1px solid #e2e8f0;}
+.card-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e2e8f0;}
+.card-row:last-child{border-bottom:none;}
+.card-label{color:#888;font-size:.88rem;}.card-val{color:#1a202c;font-weight:700;font-size:.88rem;text-align:right;}
+.cta{display:block;background:#153c5e;color:#fff;text-align:center;padding:14px;border-radius:10px;font-weight:700;text-decoration:none;margin-top:20px;}
+.fbar{background:#0f172a;padding:18px;text-align:center;}
+.fbar p{color:#64748b;font-size:.8rem;margin:0;}
+</style></head><body>
+<div class="wrap">
+<div class="hdr"><h1>🔔 New Member Registered</h1><p>Fly for Peace Admin Notification</p></div>
+<div class="body">
+<span class="badge">ACTION REQUIRED</span>
+<p style="color:#444;margin-bottom:20px;">A new member registered and completed payment. Please initiate onboarding contact.</p>
+<div class="card">
+<div class="card-row"><span class="card-label">Full Name</span><span class="card-val">${name}</span></div>
+<div class="card-row"><span class="card-label">Email</span><span class="card-val">${email}</span></div>
+<div class="card-row"><span class="card-label">Membership Type</span><span class="card-val">${memberType}</span></div>
+<div class="card-row"><span class="card-label">Amount</span><span class="card-val">${currency} ${amount}</span></div>
+${extraRows}
+<div class="card-row"><span class="card-label">Registered At</span><span class="card-val">${new Date().toLocaleString()}</span></div>
+</div>
+<a href="https://flyforpeace.rakasl.com/admin/dashboard.html" class="cta">View Admin Dashboard →</a>
+</div>
+<div class="fbar"><p>Fly for Peace Admin System — Automated Notification</p></div>
+</div></body></html>`;
+        }
+
+        function launchPayhere(data, photoBase64) {
+            const orderId = 'FFP-' + Date.now();
+
+            const payment = {
+                sandbox:     true, // ← set to false in production
+                merchant_id: PAYHERE_MERCHANT_ID,
+                return_url:  PAYHERE_RETURN_URL,
+                cancel_url:  PAYHERE_CANCEL_URL,
+                notify_url:  PAYHERE_NOTIFY_URL,
+
+                order_id:    orderId,
+                items:       data.type,
+                amount:      data.amount.toFixed(2),
+                currency:    data.currency,
+
+                first_name:  data.name.split(' ')[0] || data.name,
+                last_name:   data.name.split(' ').slice(1).join(' ') || '',
+                email:       data.email,
+                phone:       data.whatsapp,
+                address:     data.address || data.country || '',
+                city:        data.district || data.country || '',
+                country:     data.country || 'Sri Lanka',
+            };
+
+            payhere.onCompleted = async function(oid) {
+                console.log('Payment completed:', oid);
+                await saveToFirestore(data, photoBase64);
+                await sendMemberEmails(data);
+                showSuccess(data.type);
+            };
+            payhere.onDismissed = function() { console.log('Payment dismissed.'); };
+            payhere.onError = function(err) {
+                console.error('PayHere error:', err);
+                alert('Payment error. Please try again or contact support.');
+            };
+
+            payhere.startPayment(payment);
+        }
+
+        // ── Success State ──
+        function showSuccess(memberType) {
+            const panel = currentType === 'local' ? 'panel-local' : 'panel-intl';
+            const card = document.querySelector('#' + panel + ' .form-card');
+            card.innerHTML = `
+                <div class="success-overlay show">
+                    <div class="success-icon"><i class="fas fa-check"></i></div>
+                    <h2 style="color: var(--primary-dark); margin-bottom:12px;">Welcome to the Family!</h2>
+                    <p style="color: var(--text-muted); max-width:500px; margin: 0 auto 30px;">
+                        Your <strong>${memberType}</strong> membership is confirmed. A confirmation email will be sent to your registered email address shortly.
+                    </p>
+                    <a href="index.html" class="btn btn-primary" style="display:inline-block;">Back to Home</a>
+                </div>
+            `;
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // ── Check URL status on load ──
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('status') === 'success') {
+                alert('Thank you! Your payment was successful. Welcome to Fly for Peace!');
+            } else if (params.get('status') === 'cancel') {
+                alert('Your payment was cancelled. You can try again anytime.');
+            }
+        });
+    </script>
+</body>
+</html>

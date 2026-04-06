@@ -25,6 +25,7 @@
                     <li><a href="index.html" class="nav-item">Home</a></li>
                     <li><a href="about.html" class="nav-item">About</a></li>
                     <li><a href="leadership.html" class="nav-item">Leadership</a></li>
+                    <li><a href="membership.html" class="nav-item">Membership</a></li>
                     <li><a href="contact.html" class="nav-item">Contact</a></li>
                 </ul>
             </nav>
@@ -51,7 +52,16 @@
                 <div class="donation-form-wrapper shadow animate-on-scroll">
                     <h3>Make a Contribution</h3>
                     <form id="donation-form">
-                        
+                        <div class="form-group">
+                            <label for="donor-name" style="font-weight: 600; color: var(--primary-dark);">Full Name <span style="color:red;">*</span></label>
+                            <input type="text" id="donor-name" class="form-control" placeholder="Your full name" required style="margin-bottom: 14px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="donor-email" style="font-weight: 600; color: var(--primary-dark);">Email Address <span style="color:red;">*</span></label>
+                            <input type="email" id="donor-email" class="form-control" placeholder="your@email.com" required style="margin-bottom: 14px;">
+                            <small class="text-muted">We'll send you a confirmation email once your donation is verified.</small>
+                        </div>
+
                         <div class="donation-amount-group">
                             <label>Select Amount (USD)</label>
                             <div class="amount-buttons">
@@ -142,6 +152,10 @@
             
             <div class="footer-bottom">
                 <p>&copy; 2026 Fly for Peace – World Peace Movement. All Rights Reserved.</p>
+                <p style="margin-top: 10px; font-size: 0.85rem;">
+                    <a href="privacy-policy.html" style="color: #a0aec0; text-decoration: none; margin-right: 16px;">Privacy Policy</a>
+                    <a href="refund-policy.html" style="color: #a0aec0; text-decoration: none;">Refund Policy</a>
+                </p>
                 <p style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">Developed by <a href="https://www.linkedin.com/in/dumindudk" target="_blank" rel="noopener noreferrer" style="color: #5ca4cf; text-decoration: none; font-weight: 600;">Dumindu Koralearachchi</a></p>
             </div>
         </div>
@@ -207,6 +221,8 @@
                 }
 
                 await addDoc(collection(db, "donations"), {
+                    donorName: document.getElementById('donor-name').value,
+                    donorEmail: document.getElementById('donor-email').value,
                     amount: amount,
                     method: "Bank Transfer",
                     slipBase64: slipBase64,

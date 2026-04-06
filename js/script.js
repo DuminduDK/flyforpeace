@@ -61,6 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(element);
     });
 
+    // Expose for dynamic content
+    window.scrollObserver = observer;
+
     // 4. Smooth Scrolling for Anchor Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
