@@ -60,7 +60,7 @@ export const handler = async (event) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                from: 'Fly for Peace <noreply@flyforpeace.org>', // ← noreply@webmindr.online is the verified sender
+                from: 'Fly for Peace <noreply@webmindr.com>', // ← noreply@webmindr.com is the verified sender
                 to: Array.isArray(to) ? to : [to],
                 subject,
                 html,

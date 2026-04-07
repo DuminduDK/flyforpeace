@@ -1,0 +1,21 @@
+{
+  "name": "fly-for-peace",
+  "version": "1.0.0",
+  "description": "The official web platform for the **Fly for Peace – World Peace Movement**, a global initiative dedicated to promoting unity, harmony, and peaceful coexistence among nations.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DuminduDK/flyforpeace.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DuminduDK/flyforpeace/issues"
+  },
+  "homepage": "https://github.com/DuminduDK/flyforpeace#readme"
+}

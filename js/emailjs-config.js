@@ -6,7 +6,7 @@
 
 const EMAILJS_PUBLIC_KEY   = "YOUR_EMAILJS_PUBLIC_KEY";    // From EmailJS → Account → API Keys
 const EMAILJS_SERVICE_ID   = "YOUR_EMAILJS_SERVICE_ID";    // From EmailJS → Email Services
-const ADMIN_EMAIL          = "admin@flyforpeace.org";       // ← Change to real admin email
+const ADMIN_EMAIL          = "flyforpeaceinfo@gmail.com";       // ← Change to real admin email
 
 // ─── Initialise ───────────────────────────────
 (function() {
@@ -94,7 +94,7 @@ function membershipConfirmationHTML(name, memberType, amount, currency) {
     <p style="color:#555;line-height:1.7;">In the meantime, feel free to explore our website, follow us on social media, and spread the word about the Peace movement. Together, we make the sky a canvas of unity.</p>
 
     <div class="divider"></div>
-    <p class="footer-note">If you have any questions, contact us at <a href="mailto:info@flyforpeace.org" style="color:#5ca4cf;">info@flyforpeace.org</a><br>Please do not reply directly to this email.</p>
+    <p class="footer-note">If you have any questions, contact us at <a href="mailto:flyforpeaceinfo@gmail.com" style="color:#5ca4cf;">flyforpeaceinfo@gmail.com</a><br>Please do not reply directly to this email.</p>
   </div>
   <div class="footer-bar">
     <div class="social-row">
@@ -104,7 +104,7 @@ function membershipConfirmationHTML(name, memberType, amount, currency) {
       <a href="https://www.linkedin.com/company/flyforpeace">in</a>
     </div>
     <p>© 2026 Fly for Peace – World Peace Movement. All Rights Reserved.</p>
-    <p><a href="https://flyforpeace.org">flyforpeace.org</a></p>
+    <p><a href="https://flyforpeace.com">flyforpeace.com</a></p>
   </div>
 </div>
 </body></html>`;
@@ -148,7 +148,7 @@ function membershipAdminNotifHTML(name, email, memberType, amount, currency, ext
       ${extraDetails}
       <div class="card-row"><span class="card-label">Registered At</span><span class="card-val">${new Date().toLocaleString()}</span></div>
     </div>
-    <a href="https://flyforpeace.org/admin/dashboard.html" class="cta">View in Admin Dashboard →</a>
+    <a href="https://flyforpeace.com/admin/dashboard.html" class="cta">View in Admin Dashboard →</a>
   </div>
   <div class="footer-bar"><p>Fly for Peace Admin System — Automated Notification</p></div>
 </div>
@@ -211,7 +211,7 @@ function donationApprovedHTML(donorName, amount) {
 
     <p style="color:#555;line-height:1.7;text-align:center;">Your kindness is helping us build a world where the sky is filled with colors of freedom. Thank you for being a part of this movement.</p>
 
-    <p class="footer-note">Questions? Reach us at <a href="mailto:info@flyforpeace.org" style="color:#5ca4cf;">info@flyforpeace.org</a></p>
+    <p class="footer-note">Questions? Reach us at <a href="mailto:flyforpeaceinfo@gmail.com" style="color:#5ca4cf;">flyforpeaceinfo@gmail.com</a></p>
   </div>
   <div class="footer-bar">
     <div class="social-row">
@@ -220,7 +220,7 @@ function donationApprovedHTML(donorName, amount) {
       <a href="https://www.instagram.com/flyforpeaceofficial">▣</a>
     </div>
     <p>© 2026 Fly for Peace – World Peace Movement. All Rights Reserved.</p>
-    <p><a href="https://flyforpeace.org">flyforpeace.org</a></p>
+    <p><a href="https://flyforpeace.com">flyforpeace.com</a></p>
   </div>
 </div>
 </body></html>`;
