@@ -870,7 +870,7 @@
 
     <script>
         // ── Config ──
-        const PAYHERE_MERCHANT_ID  = "YOUR_MERCHANT_ID";
+        const PAYHERE_MERCHANT_ID  = "240156";
         const PAYHERE_NOTIFY_URL   = "https://flyforpeace.rakasl.com/payhere-notify";
         const PAYHERE_RETURN_URL   = window.location.origin + "/membership.html?status=success";
         const PAYHERE_CANCEL_URL   = window.location.origin + "/membership.html?status=cancel";
@@ -1154,7 +1154,7 @@ ${extraRows}
             const orderId = 'FFP-' + Date.now();
 
             const payment = {
-                sandbox:     true, // ← set to false in production
+                sandbox:     false, // ← set to false in production
                 merchant_id: PAYHERE_MERCHANT_ID,
                 return_url:  PAYHERE_RETURN_URL,
                 cancel_url:  PAYHERE_CANCEL_URL,
