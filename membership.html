@@ -871,7 +871,7 @@
     <script>
         // ── Config ──
         const PAYHERE_MERCHANT_ID  = "240156";
-        const PAYHERE_NOTIFY_URL   = "https://flyforpeace.rakasl.com/payhere-notify";
+        const PAYHERE_NOTIFY_URL   = "https://flyforpeace.com/payhere-notify";
         const PAYHERE_RETURN_URL   = window.location.origin + "/membership.html?status=success";
         const PAYHERE_CANCEL_URL   = window.location.origin + "/membership.html?status=cancel";
         const ADMIN_EMAIL          = "flyforpeaceinfo@gmail.com";
@@ -1049,17 +1049,16 @@
             }
         }
 
-        const RESEND_API_KEY = "re_GqjoHFsi_KVtDoA5GevTmmntk9i9KgfMu";
-        const FROM_ADDRESS   = "noreply@webmindr.online";
-        const CORS_PROXY     = "https://corsproxy.io/?";
-
         async function resendEmail(to, subject, html) {
             try {
-                await fetch(CORS_PROXY + "https://api.resend.com/emails", {
+                const response = await fetch(window.location.origin + "/.netlify/functions/send-email", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${RESEND_API_KEY}` },
-                    body: JSON.stringify({ from: FROM_ADDRESS, to: Array.isArray(to) ? to : [to], subject, html }),
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ to, subject, html }),
                 });
+                if (!response.ok) {
+                    throw new Error("Failed to send email");
+                }
                 console.log("✅ Email sent to:", to);
             } catch(err) {
                 console.warn("❌ Email send error:", err);
@@ -1111,7 +1110,7 @@ body{margin:0;padding:0;background:#f0f4f8;font-family:'Segoe UI',Arial,sans-ser
 <p style="color:#555;line-height:1.7;">Follow us on social media and spread the word about Peace! Together, we make the sky a canvas of unity.</p>
 <p class="fnote">Questions? <a href="mailto:flyforpeaceinfo@gmail.com" style="color:#5ca4cf;">flyforpeaceinfo@gmail.com</a></p>
 </div>
-<div class="fbar"><p>&copy; 2026 Fly for Peace &ndash; World Peace Movement.</p><p><a href="https://flyforpeace.rakasl.com">flyforpeace.rakasl.com</a></p></div>
+<div class="fbar"><p>&copy; 2026 Fly for Peace &ndash; World Peace Movement.</p><p><a href="https://flyforpeace.com">flyforpeace.com</a></p></div>
 </div></body></html>`;
         }
 
@@ -1144,14 +1143,39 @@ body{margin:0;padding:0;background:#f0f4f8;font-family:'Segoe UI',Arial,sans-ser
 ${extraRows}
 <div class="card-row"><span class="card-label">Registered At</span><span class="card-val">${new Date().toLocaleString()}</span></div>
 </div>
-<a href="https://flyforpeace.rakasl.com/admin/dashboard.html" class="cta">View Admin Dashboard →</a>
+<a href="https://flyforpeace.com/admin/dashboard.html" class="cta">View Admin Dashboard →</a>
 </div>
 <div class="fbar"><p>Fly for Peace Admin System — Automated Notification</p></div>
 </div></body></html>`;
         }
 
-        function launchPayhere(data, photoBase64) {
+        async function launchPayhere(data, photoBase64) {
             const orderId = 'FFP-' + Date.now();
+            const amountFormatted = data.amount.toFixed(2);
+
+            let hashStr = "";
+            try {
+                const response = await fetch(window.location.origin + '/.netlify/functions/generate-payhere-hash', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        order_id: orderId,
+                        amount: amountFormatted,
+                        currency: data.currency
+                    })
+                });
+                const result = await response.json();
+                if (result.hash) {
+                    hashStr = result.hash;
+                } else {
+                    alert('Payment security error: Could not generate hash.');
+                    return;
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Connection error resolving payment security. Please try again.');
+                return;
+            }
 
             const payment = {
                 sandbox:     false, // ← set to false in production
@@ -1162,8 +1186,9 @@ ${extraRows}
 
                 order_id:    orderId,
                 items:       data.type,
-                amount:      data.amount.toFixed(2),
+                amount:      amountFormatted,
                 currency:    data.currency,
+                hash:        hashStr,
 
                 first_name:  data.name.split(' ')[0] || data.name,
                 last_name:   data.name.split(' ').slice(1).join(' ') || '',

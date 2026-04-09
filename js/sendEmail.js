@@ -94,7 +94,7 @@ body{margin:0;padding:0;background:#f0f4f8;font-family:Arial,sans-serif;}
   </div>
   <div class="fbar">
     <p>&copy; 2026 Fly for Peace &ndash; World Peace Movement. All Rights Reserved.</p>
-    <p><a href="https://flyforpeace.rakasl.com">flyforpeace.rakasl.com</a></p></div>
+    <p><a href="https://flyforpeace.com">flyforpeace.com</a></p></div>
   </div>
 </div>
 </body></html>`;
@@ -132,7 +132,7 @@ body{margin:0;padding:0;background:#f0f4f8;font-family:Arial,sans-serif;}
       ${extraDetails}
       <div class="card-row"><span class="card-label">Registered At</span><span class="card-val">${new Date().toLocaleString('en-US', { dateStyle:'medium', timeStyle:'short' })}</span></div>
     </div>
-    <a href="https://flyforpeace.rakasl.com/admin/dashboard.html" class="cta">Open Admin Dashboard &rarr;</a>
+    <a href="https://flyforpeace.com/admin/dashboard.html" class="cta">Open Admin Dashboard &rarr;</a>
   </div>
   <div class="fbar"><p>Fly for Peace Admin System &mdash; Automated Notification</p></div>
 </div>
@@ -180,7 +180,7 @@ body{margin:0;padding:0;background:#f0f4f8;font-family:Arial,sans-serif;}
   </div>
   <div class="fbar">
     <p>&copy; 2026 Fly for Peace &ndash; World Peace Movement. All Rights Reserved.</p>
-    <p><a href="https://flyforpeace.rakasl.com">flyforpeace.rakasl.com</a></p>
+    <p><a href="https://flyforpeace.com">flyforpeace.com</a></p>
   </div>
 </div>
 </body></html>`;
@@ -215,7 +215,7 @@ body{margin:0;padding:0;background:#f0f4f8;font-family:Arial,sans-serif;}
       <div class="card-row"><span class="card-label">Amount</span><span class="card-val">$${amount} USD</span></div>
       <div class="card-row"><span class="card-label">Approved At</span><span class="card-val">${new Date().toLocaleString('en-US', { dateStyle:'medium', timeStyle:'short' })}</span></div>
     </div>
-    <a href="https://flyforpeace.rakasl.com/admin/dashboard.html" class="cta">View Dashboard &rarr;</a>
+    <a href="https://flyforpeace.com/admin/dashboard.html" class="cta">View Dashboard &rarr;</a>
   </div>
   <div class="fbar"><p>Fly for Peace Admin System &mdash; Automated Notification</p></div>
 </div>
