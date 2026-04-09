@@ -27,8 +27,12 @@ export const handler = async (event) => {
 
     const { order_id, amount, currency } = payload;
     const merchant_id = "240156";
-    // We default to the provided secret for immediate unblocking, but strongly recommend setting it in Netlify Env Vars!
-    const merchant_secret = process.env.PAYHERE_SECRET || "MTk3NzM4MTg4MjM5NzgwODY4MjEyNjIyOTMyOTkxMjQ2MjQ0NDMwMw==";
+    // Read from Netlify Environment Variables (NOT HARDCODED)
+    const merchant_secret = process.env.PAYHERE_SECRET;
+
+    if (!merchant_secret) {
+        return { statusCode: 500, headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ error: 'Server configuration error: Missing Secret key' }) };
+    }
 
     if (!order_id || !amount || !currency) {
         return { statusCode: 400, headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ error: 'Missing parameters: order_id, amount, currency' }) };
