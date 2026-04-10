@@ -7,6 +7,8 @@
     <link rel="icon" type="image/png" href="../assets/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/admin.css">
+    <!-- Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <div class="login-container">
@@ -22,6 +24,8 @@
                     <label>Password</label>
                     <input type="password" id="password" required placeholder="••••••••">
                 </div>
+                <!-- reCAPTCHA Widget -->
+                <div class="g-recaptcha" data-sitekey="6LeAErAsAAAAAAcKKrscvNJKoMLklKKmWoJPfJ-i" style="margin-bottom: 20px;"></div>
                 <button type="submit" class="btn" id="login-btn">Secure Login</button>
                 <div id="error-msg" class="error-msg">Invalid credentials. Please try again.</div>
             </form>
@@ -45,6 +49,14 @@
             const pass = document.getElementById('password').value;
             const btn = document.getElementById('login-btn');
             const errorMsg = document.getElementById('error-msg');
+            
+            // reCAPTCHA validation
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (recaptchaResponse.length === 0) {
+                errorMsg.innerText = "Please complete the reCAPTCHA to verify you are human.";
+                errorMsg.style.display = 'block';
+                return;
+            }
             
             btn.innerText = "Authenticating...";
             errorMsg.style.display = 'none';
