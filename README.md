@@ -8,7 +8,7 @@ The official web platform for the **Fly for Peace – World Peace Movement**, a 
 
 Fly for Peace is a global movement that transforms the sky into a symbol of unity, delivering the message:
 
-"Air is not for war; Air is to breathe."
+"Air is not for war; Air is to breath."
 
 This website serves as the central digital platform for communicating the vision, leadership, and global activities of the movement while enabling public engagement and financial support.
 

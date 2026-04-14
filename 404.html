@@ -3,22 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Fly for Peace</title>
-    <meta name="description" content="About Fly for Peace – Discover our global mission to transform the skies into a universal canvas for peace and unity.">
+    <title>Page Not Found | Fly for Peace</title>
+    <meta name="description" content="The page you are looking for does not exist. Fly for Peace.">
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://flyforpeace.com/about.html">
-    <meta property="og:title" content="About | Fly for Peace">
-    <meta property="og:description" content="About Fly for Peace – Discover our global mission to transform the skies into a universal canvas for peace and unity.">
-    <meta property="og:image" content="https://flyforpeace.com/assets/social-share.jpg">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://flyforpeace.com/about.html">
-    <meta property="twitter:title" content="About | Fly for Peace">
-    <meta property="twitter:description" content="About Fly for Peace – Discover our global mission to transform the skies into a universal canvas for peace and unity.">
-    <meta property="twitter:image" content="https://flyforpeace.com/assets/social-share.jpg">
     <link rel="icon" type="image/png" href="assets/logo.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -26,6 +13,48 @@
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/pages.css">
+    <style>
+        .error-404-container {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin: 40px auto;
+            max-width: 800px;
+        }
+        .error-404-container h1 {
+            font-size: 8rem;
+            color: var(--primary-color);
+            margin-bottom: 0;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .error-404-container h2 {
+            font-size: 2.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+        .error-404-container p {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .error-404-container .bird-icon {
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
 </head>
 <body>
 
@@ -38,7 +67,7 @@
             <nav class="main-nav">
                 <ul class="nav-list">
                     <li><a href="index.html" class="nav-item">Home</a></li>
-                    <li><a href="about.html" class="nav-item active">About</a></li>
+                    <li><a href="about.html" class="nav-item">About</a></li>
                     <li><a href="leadership.html" class="nav-item">Leadership</a></li>
                     <li><a href="membership.html" class="nav-item">Membership</a></li>
                     <li><a href="largest-peace.html" class="nav-item">Largest Peace</a></li>
@@ -52,36 +81,18 @@
         </div>
     </header>
 
-    <div class="page-header">
-        <div class="container animate-up">
-            <h1>About the Movement</h1>
-            <p>Discover our global mission to transform the skies into a universal canvas for peace and unity.</p>
-        </div>
-    </div>
 
-    <!-- About Content -->
+    <!-- 404 Content -->
     <section class="content-section pt-0">
         <div class="container">
-            <div class="about-grid">
-                <div class="about-text animate-on-scroll">
-                    <h3>The Main Event: Kite Air Show</h3>
-                    <p><strong>Fly for Peace</strong> is culminating in an extraordinary <strong>Kite Air Show Event on April 22nd, 2026, at Bentota Beach, Sri Lanka</strong>. We invite the world to join this worldwide movement that uses the universally celebrated sky as a canvas for unity. We believe that cultural expression and international collaboration possess the power to transcend borders.</p>
-                    <div class="mission-vision">
-                        <div class="card">
-                            <div class="card-icon"><i class="fas fa-bullseye"></i></div>
-                            <h4>Our Mission</h4>
-                            <p>To unite individuals worldwide through peaceful expression, fostering an environment where nations collaborate in harmony.</p>
-                        </div>
-                        <div class="card">
-                            <div class="card-icon"><i class="fas fa-eye"></i></div>
-                            <h4>Our Vision</h4>
-                            <p>A world where the sky is only filled with colors of freedom, kites of joy, and symbols of human connection—never conflict.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image animate-on-scroll" style="display: flex; justify-content: center; align-items: center;">
-                    <img src="assets/logo.png" alt="Fly for Peace Logo" style="width: 100%; max-width: 450px; border-radius: 20px; object-fit: contain;">
-                </div>
+            <div class="error-404-container animate-on-scroll">
+                <i class="fas fa-dove bird-icon"></i>
+                <h1>404</h1>
+                <h2>Oops! Page Not Found</h2>
+                <p>It seems you've flown a little off course. The page you are trying to reach may have been moved, deleted, or never existed.</p>
+                <a href="index.html" class="btn btn-primary" style="padding: 12px 30px; font-size: 1.1rem; border-radius: 30px;">
+                    <i class="fas fa-home" style="margin-right: 8px;"></i> Return to Home
+                </a>
             </div>
         </div>
     </section>
@@ -133,4 +144,3 @@
     <script src="js/script.js"></script>
 </body>
 </html>
-

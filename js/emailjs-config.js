@@ -206,7 +206,7 @@ function donationApprovedHTML(donorName, amount) {
     </div>
 
     <div class="quote-box">
-      Air is not for war; Air is to breathe.
+      Air is not for war; Air is to breath.
     </div>
 
     <p style="color:#555;line-height:1.7;text-align:center;">Your kindness is helping us build a world where the sky is filled with colors of freedom. Thank you for being a part of this movement.</p>

@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/DuminduDK/flyforpeace/issues"
   },
-  "homepage": "https://github.com/DuminduDK/flyforpeace#readme"
+  "homepage": "https://github.com/DuminduDK/flyforpeace#readme",
+  "dependencies": {
+    "puppeteer": "^24.40.0"
+  }
 }
