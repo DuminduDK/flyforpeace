@@ -20,5 +20,8 @@
   "homepage": "https://github.com/DuminduDK/flyforpeace#readme",
   "dependencies": {
     "puppeteer": "^24.40.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^24.11.3"
   }
 }

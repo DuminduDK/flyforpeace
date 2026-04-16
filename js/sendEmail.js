@@ -174,7 +174,7 @@ body{margin:0;padding:0;background:#f0f4f8;font-family:Arial,sans-serif;}
       <p>&#x1F30D; Global outreach and cultural exchange programs</p>
       <p>&#x1F54A;&#xFE0F; Campaigns promoting peace and unity worldwide</p>
     </div>
-    <div class="quote">&ldquo;Air is not for war; Air is to breath.&rdquo;</div>
+    <div class="quote">&ldquo;Air is not for war; Air is to breathe.&rdquo;</div>
     <p style="color:#555;line-height:1.7;text-align:center;">Your kindness is helping us build a world where the sky is painted with colors of freedom. Thank you for being part of this movement.</p>
     <p class="fnote">Questions? <a href="mailto:flyforpeaceinfo@gmail.com" style="color:#5ca4cf;">flyforpeaceinfo@gmail.com</a><br>Please do not reply to this automated email.</p>
   </div>
