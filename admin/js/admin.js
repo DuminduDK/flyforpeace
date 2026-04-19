@@ -428,7 +428,7 @@ async function loadMessages() {
             <td>${dateStr}</td>
             <td><strong>${data.name}</strong></td>
             <td>${data.email}</td>
-            <td>${data.message.substring(0, 80)}...</td>
+            <td>${data.message}</td>
         </tr>`;
     });
 }
