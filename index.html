@@ -147,34 +147,6 @@
             </div>
 
             <div class="news-grid">
-                <!-- Example News Item 1 -->
-                <div class="news-card animate-on-scroll">
-                    <div class="news-img"
-                        style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);">
-                        <i class="fas fa-calendar-alt fa-3x" style="color:white; padding: 60px;"></i>
-                    </div>
-                    <div class="news-content">
-                        <div class="news-date">April 22, 2026</div>
-                        <h4>Fly for Peace Kite Air Show at Bentota Beach</h4>
-                        <p>Join us at Bentota Beach, Sri Lanka for the main event! Thousands of kites representing peace
-                            will be launched simultaneously into the sky.</p>
-                        <a href="about.html" class="read-more">Learn More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <!-- Example News Item 2 -->
-                <div class="news-card animate-on-scroll">
-                    <div class="news-img"
-                        style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);">
-                        <i class="fas fa-handshake fa-3x" style="color:white; padding: 60px;"></i>
-                    </div>
-                    <div class="news-content">
-                        <div class="news-date">March 22, 2026</div>
-                        <h4>New Global Partner Joined</h4>
-                        <p>We are thrilled to welcome new partner organizations to the executive committee to expand our
-                            reach.</p>
-                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -303,6 +275,12 @@
         </div>
     </div>
 
+    <!-- Image Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox-modal">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
     <!-- Custom JS -->
     <script src="js/script.js"></script>
     <script type="module">
@@ -385,7 +363,7 @@
             if (data.images && data.images.length > 1) {
                 gallerySec.style.display = 'block';
                 galleryGrid.innerHTML = data.images.map((img, i) => `
-                    <div class="gallery-item" onclick="event.stopPropagation(); window.open('${img}', '_blank')">
+                    <div class="gallery-item" onclick="event.stopPropagation(); openLightbox('${img}')">
                         <img src="${img}" alt="Gallery ${i + 1}">
                     </div>
                 `).join('');
@@ -405,6 +383,23 @@
         document.getElementById('modal-close').addEventListener('click', closeModal);
         document.getElementById('news-modal').addEventListener('click', (e) => {
             if (e.target === document.getElementById('news-modal')) closeModal();
+        });
+
+        // Lightbox Functions
+        window.openLightbox = (imgSrc) => {
+            const lightbox = document.getElementById('lightbox-modal');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightbox.style.display = 'block';
+            lightboxImg.src = imgSrc;
+        };
+
+        const closeLightbox = () => {
+            document.getElementById('lightbox-modal').style.display = 'none';
+        };
+
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('lightbox-modal')) closeLightbox();
         });
 
         fetchNews();
