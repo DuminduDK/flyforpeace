@@ -259,6 +259,7 @@
                             rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
                         <a href="https://www.linkedin.com/company/flyforpeace" target="_blank"
                             rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.youtube.com/@flyforpeaceofficial" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
             </div>
@@ -283,9 +284,11 @@
             <div class="news-modal-close" id="modal-close"><i class="fas fa-times"></i></div>
             <div class="news-modal-hero" id="modal-hero"></div>
             <div class="news-modal-body">
-                <div class="news-modal-meta">
+                <div class="news-modal-meta" style="display:flex; align-items:center; flex-wrap:wrap; gap:10px;">
                     <span id="modal-tag" class="blog-card-tag" style="position: static;">Announcement</span>
                     <span id="modal-date" class="blog-card-date" style="margin-bottom: 0;"></span>
+                
+                    <button class="btn btn-secondary" id="share-news-btn" style="padding: 5px 15px; font-size: 0.85rem; margin-left: auto; display: flex; align-items: center; gap: 5px;" onclick="shareCurrentNews()"><i class="fas fa-link"></i> Copy Link</button>
                 </div>
                 <h2 class="news-modal-title" id="modal-title"></h2>
                 <div class="news-modal-text" id="modal-text"></div>
@@ -296,6 +299,12 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Image Lightbox Modal -->
+    <div id="image-lightbox" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; cursor:pointer;" onclick="this.style.display='none'">
+        <span style="position:absolute; top:20px; right:30px; color:white; font-size:40px; font-weight:bold; transition:color 0.3s;" onmouseover="this.style.color='#e74c3c'" onmouseout="this.style.color='white'">&times;</span>
+        <img id="lightbox-img" src="" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); max-width:90vw; max-height:90vh; border-radius:10px; box-shadow:0 0 20px rgba(0,0,0,0.5);">
     </div>
 
     <!-- Custom JS -->
@@ -357,6 +366,8 @@
         }
 
         window.openNewsModal = (id) => {
+            window._currentNewsId = id;
+            history.replaceState(null, '', '?news=' + id);
             const data = window._newsCache[id];
             if (!data) return;
 
@@ -372,7 +383,7 @@
             document.getElementById('modal-date').innerHTML = `<i class="far fa-calendar-alt"></i> ${formattedDate}`;
 
             const coverImg = data.imageBase64 || (data.images && data.images[0]) || '';
-            document.getElementById('modal-hero').innerHTML = coverImg ? `<img src="${coverImg}" alt="${data.title}">` : '';
+            document.getElementById('modal-hero').innerHTML = coverImg ? `<img src="${coverImg}" alt="${data.title}" style="cursor:pointer" onclick="event.stopPropagation(); document.getElementById(\'lightbox-img\').src=\'${coverImg}\'; document.getElementById(\'image-lightbox\').style.display=\'block\';">` : '';
 
             // Gallery
             const gallerySec = document.getElementById('modal-gallery-sec');
@@ -380,7 +391,7 @@
             if (data.images && data.images.length > 1) {
                 gallerySec.style.display = 'block';
                 galleryGrid.innerHTML = data.images.map((img, i) => `
-                    <div class="gallery-item" onclick="event.stopPropagation(); window.open('${img}', '_blank')">
+                    <div class="gallery-item" onclick="event.stopPropagation(); document.getElementById('lightbox-img').src='${img}'; document.getElementById('image-lightbox').style.display='block';">
                         <img src="${img}" alt="Gallery ${i + 1}">
                     </div>
                 `).join('');
