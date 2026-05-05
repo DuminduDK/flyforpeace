@@ -257,6 +257,7 @@
                 <a href="#" class="nav-link" data-target="members-sec"><i class="fas fa-id-card"></i> Members</a>
                 <a href="#" class="nav-link" data-target="donations-sec"><i class="fas fa-hand-holding-heart"></i> Donations</a>
                 <a href="#" class="nav-link" data-target="messages-sec"><i class="fas fa-envelope"></i> Messages</a>
+                <a href="#" class="nav-link" data-target="representatives-sec"><i class="fas fa-earth-asia"></i> Peace Representatives</a>
             </nav>
             <div class="logout-btn nav-link" id="logout-btn" style="color: white; margin-top: auto;"><i class="fas fa-sign-out-alt"></i> Logout</div>
         </aside>
@@ -358,6 +359,72 @@
                     <thead><tr><th>Timestamp</th><th>Name</th><th>Email</th><th>Message</th></tr></thead>
                     <tbody id="messages-table-body"></tbody>
                 </table>
+            </section>
+
+            <!-- ── Peace Representatives Manager ── -->
+            <section id="representatives-sec" class="content-section">
+                <!-- Country Management -->
+                <div style="display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; margin-bottom:36px;">
+                    <div style="flex:1; min-width:280px; background:#fff; border-radius:16px; padding:24px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border:1px solid var(--border);">
+                        <h2 class="section-title" style="margin-bottom:16px;">Manage Countries</h2>
+                        <form id="country-form" style="display:flex;gap:10px;flex-wrap:wrap;">
+                            <input type="hidden" id="edit-country-id">
+                            <div class="form-group" style="flex:1;min-width:180px;margin-bottom:0;">
+                                <input type="text" id="country-name" placeholder="Country Name (e.g. India)" required style="width:100%;">
+                            </div>
+                            <div class="form-group" style="flex:1;min-width:180px;margin-bottom:0;">
+                                <input type="text" id="country-flag-filename" placeholder="Flag filename (e.g. india-flag.png)" required style="width:100%;">
+                            </div>
+                            <button type="submit" class="btn" id="country-submit-btn" style="align-self:flex-end;">Add Country</button>
+                            <button type="button" class="btn" id="country-cancel-btn" style="background:var(--bg-light);color:var(--text-dark);display:none;align-self:flex-end;">Cancel</button>
+                        </form>
+                        <div id="country-list" style="margin-top:20px; display:flex; flex-wrap:wrap; gap:10px;"></div>
+                    </div>
+                </div>
+
+                <!-- Representative Form -->
+                <div id="rep-form-section" style="background:#fff;border-radius:16px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,0.07);border:1px solid var(--border);margin-bottom:32px; display:none;">
+                    <h2 class="section-title" id="rep-form-title">Add New Representative</h2>
+                    <form id="rep-form" style="max-width:700px;">
+                        <input type="hidden" id="edit-rep-id">
+                        <input type="hidden" id="rep-country-id">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="rep-name" required placeholder="e.g. Capt. Shekhar Gupta">
+                            </div>
+                            <div class="form-group">
+                                <label>Designation / Title</label>
+                                <input type="text" id="rep-designation" required placeholder="e.g. State Representative">
+                            </div>
+                            <div class="form-group">
+                                <label>State / Region</label>
+                                <input type="text" id="rep-state" placeholder="e.g. Rajasthan">
+                            </div>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" id="rep-city" placeholder="e.g. Jaipur">
+                            </div>
+                            <div class="form-group" style="grid-column:1/-1;">
+                                <label>Profile Photo</label>
+                                <input type="file" id="rep-photo" accept="image/*">
+                                <div id="rep-photo-preview" style="margin-top:10px;"></div>
+                            </div>
+                            <div class="form-group" style="grid-column:1/-1;">
+                                <label>Bio / Description <span style="color:#aaa;font-weight:400;">(optional)</span></label>
+                                <textarea id="rep-bio" rows="3" placeholder="Short biography or note..."></textarea>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:10px;margin-top:8px;">
+                            <button type="submit" class="btn" id="rep-submit-btn">Save Representative</button>
+                            <button type="button" class="btn" id="rep-cancel-btn" style="background:var(--bg-light);color:var(--text-dark);">Cancel</button>
+                        </div>
+                        <div id="rep-success" style="color:green;margin-top:10px;display:none;">Saved successfully!</div>
+                    </form>
+                </div>
+
+                <!-- Representatives by Country -->
+                <div id="reps-by-country"></div>
             </section>
         </main>
     </div>

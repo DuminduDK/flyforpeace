@@ -30,6 +30,7 @@ onAuthStateChanged(auth, (user) => {
         loadMembers();
         loadDonations();
         loadMessages();
+        loadRepresentatives();
     }
 });
 
@@ -432,3 +433,254 @@ async function loadMessages() {
         </tr>`;
     });
 }
+
+// -- PEACE REPRESENTATIVES ------------------------------
+
+let _allCountries   = [];
+let _allReps        = [];
+let _repPhotoBase64 = '';
+
+async function compressRepPhoto(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const MAX = 600;
+                let w = img.width, h = img.height;
+                if (w > MAX) { h = Math.round((h * MAX) / w); w = MAX; }
+                canvas.width = w; canvas.height = h;
+                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                resolve(canvas.toDataURL('image/jpeg', 0.75));
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+document.getElementById('rep-photo').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    _repPhotoBase64 = await compressRepPhoto(file);
+    document.getElementById('rep-photo-preview').innerHTML = `<img src="${_repPhotoBase64}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center top;border:3px solid #e2e8f0;">`;
+});
+
+async function loadRepresentatives() {
+    try {
+        const cSnap = await getDocs(query(collection(db, 'peace_countries'), orderBy('name')));
+        _allCountries = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const rSnap = await getDocs(query(collection(db, 'peace_representatives'), orderBy('name')));
+        _allReps = rSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderCountryList();
+        renderRepsByCountry();
+    } catch(err) {
+        console.error('Error loading representatives:', err);
+    }
+}
+
+function renderCountryList() {
+    const container = document.getElementById('country-list');
+    if (!_allCountries.length) {
+        container.innerHTML = '<p style="color:#aaa;font-size:0.85rem;">No countries added yet.</p>';
+        return;
+    }
+    container.innerHTML = _allCountries.map(c => `
+        <div style="display:flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:8px 14px;flex-wrap:wrap;">
+            <img src="../assets/${c.flagFilename}" alt="${c.name}" style="width:24px;border-radius:3px;" onerror="this.style.display='none'">
+            <span style="font-weight:600;font-size:0.9rem;">${c.name}</span>
+            <button onclick="editCountry('${c.id}')" style="background:none;border:none;color:#5ca4cf;cursor:pointer;padding:2px 4px;" title="Edit"><i class="fas fa-edit"></i></button>
+            <button onclick="deleteCountry('${c.id}')" style="background:none;border:none;color:#e74c3c;cursor:pointer;padding:2px 4px;" title="Delete"><i class="fas fa-trash"></i></button>
+            <button onclick="openRepForm('${c.id}')" style="background:var(--accent);color:#fff;border:none;border-radius:6px;padding:3px 10px;cursor:pointer;font-size:0.78rem;font-weight:600;"><i class="fas fa-user-plus"></i> Add Rep</button>
+        </div>
+    `).join('');
+}
+
+function renderRepsByCountry() {
+    const container = document.getElementById('reps-by-country');
+    if (!_allCountries.length) { container.innerHTML = ''; return; }
+    container.innerHTML = _allCountries.map(country => {
+        const reps = _allReps.filter(r => r.countryId === country.id);
+        const repCards = reps.length === 0
+            ? '<p style="color:#aaa;font-style:italic;font-size:0.88rem;">No representatives yet. Click "Add Rep" above to add one.</p>'
+            : `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;">${reps.map(rep => `
+                <div style="border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.04);transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.04)'">
+                    <div style="background:linear-gradient(135deg,#153c5e,#5ca4cf);padding:16px;text-align:center;">
+                        ${rep.photoBase64 ? `<img src="${rep.photoBase64}" style="width:70px;height:70px;border-radius:50%;object-fit:cover;object-position:center top;border:3px solid rgba(255,255,255,0.4);">` : '<div style="width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;"><i class="fas fa-user" style="font-size:2rem;color:rgba(255,255,255,0.7);"></i></div>'}
+                        <h4 style="color:#fff;margin:10px 0 4px;font-size:0.95rem;">${rep.name}</h4>
+                        <span style="background:rgba(255,255,255,0.2);color:#fff;padding:2px 10px;border-radius:20px;font-size:0.72rem;font-weight:700;">${rep.designation}</span>
+                    </div>
+                    <div style="padding:12px 14px;font-size:0.82rem;color:#555;">
+                        ${rep.state ? `<div style="margin-bottom:4px;"><i class="fas fa-map-marked-alt" style="color:#5ca4cf;width:14px;margin-right:6px;"></i>${rep.state}</div>` : ''}
+                        ${rep.city  ? `<div style="margin-bottom:4px;"><i class="fas fa-city" style="color:#5ca4cf;width:14px;margin-right:6px;"></i>${rep.city}</div>` : ''}
+                        ${rep.bio   ? `<div style="margin-top:6px;color:#888;font-style:italic;line-height:1.4;">"${rep.bio.substring(0,70)}${rep.bio.length > 70 ? '...' : ''}"</div>` : ''}
+                    </div>
+                    <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;">
+                        <button onclick="editRep('${rep.id}')" style="background:#5ca4cf;color:#fff;border:none;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:0.8rem;"><i class="fas fa-edit"></i> Edit</button>
+                        <button onclick="deleteRep('${rep.id}')" style="background:#e74c3c;color:#fff;border:none;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:0.8rem;"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>`).join('')}
+            </div>`;
+        return `
+        <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.07);border:1px solid var(--border);margin-bottom:24px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+                <img src="../assets/${country.flagFilename}" alt="${country.name}" style="width:36px;border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,0.1);" onerror="this.style.display='none'">
+                <h3 style="margin:0;font-size:1.25rem;color:#153c5e;">${country.name}</h3>
+                <span style="background:#e8f4fd;color:#5ca4cf;border-radius:20px;padding:3px 12px;font-size:0.78rem;font-weight:700;">${reps.length} Rep${reps.length !== 1 ? 's' : ''}</span>
+            </div>
+            ${repCards}
+        </div>`;
+    }).join('');
+}
+
+document.getElementById('country-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn    = document.getElementById('country-submit-btn');
+    const editId = document.getElementById('edit-country-id').value;
+    const payload = {
+        name:         document.getElementById('country-name').value.trim(),
+        flagFilename: document.getElementById('country-flag-filename').value.trim()
+    };
+    btn.textContent = 'Saving...';
+    try {
+        if (editId) {
+            await updateDoc(doc(db, 'peace_countries', editId), payload);
+        } else {
+            await addDoc(collection(db, 'peace_countries'), payload);
+        }
+        resetCountryForm();
+        await loadRepresentatives();
+    } catch(err) {
+        console.error(err);
+        alert('Error saving country. See console.');
+    }
+    btn.textContent = editId ? 'Update Country' : 'Add Country';
+});
+
+function resetCountryForm() {
+    document.getElementById('country-form').reset();
+    document.getElementById('edit-country-id').value = '';
+    document.getElementById('country-submit-btn').textContent = 'Add Country';
+    document.getElementById('country-cancel-btn').style.display = 'none';
+}
+document.getElementById('country-cancel-btn').addEventListener('click', resetCountryForm);
+
+window.editCountry = (id) => {
+    const c = _allCountries.find(x => x.id === id);
+    if (!c) return;
+    document.getElementById('edit-country-id').value      = id;
+    document.getElementById('country-name').value          = c.name;
+    document.getElementById('country-flag-filename').value = c.flagFilename;
+    document.getElementById('country-submit-btn').textContent = 'Update Country';
+    document.getElementById('country-cancel-btn').style.display = 'inline-block';
+    document.getElementById('country-name').focus();
+};
+
+window.deleteCountry = async (id) => {
+    const repsInCountry = _allReps.filter(r => r.countryId === id);
+    const msg = repsInCountry.length
+        ? `This country has ${repsInCountry.length} representative(s). Deleting it will also remove them. Continue?`
+        : 'Delete this country?';
+    if (!confirm(msg)) return;
+    try {
+        await Promise.all(repsInCountry.map(r => deleteDoc(doc(db, 'peace_representatives', r.id))));
+        await deleteDoc(doc(db, 'peace_countries', id));
+        await loadRepresentatives();
+    } catch(err) {
+        console.error(err);
+        alert('Error deleting country.');
+    }
+};
+
+window.openRepForm = (countryId) => {
+    const formSection = document.getElementById('rep-form-section');
+    document.getElementById('rep-form').reset();
+    document.getElementById('rep-photo-preview').innerHTML = '';
+    _repPhotoBase64 = '';
+    document.getElementById('edit-rep-id').value    = '';
+    document.getElementById('rep-country-id').value = countryId;
+    document.getElementById('rep-form-title').textContent = 'Add New Representative';
+    document.getElementById('rep-submit-btn').textContent  = 'Save Representative';
+    document.getElementById('rep-success').style.display   = 'none';
+    formSection.style.display = 'block';
+    formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+window.editRep = (repId) => {
+    const rep = _allReps.find(r => r.id === repId);
+    if (!rep) return;
+    const formSection = document.getElementById('rep-form-section');
+    document.getElementById('rep-form').reset();
+    document.getElementById('edit-rep-id').value    = repId;
+    document.getElementById('rep-country-id').value = rep.countryId;
+    document.getElementById('rep-name').value        = rep.name        || '';
+    document.getElementById('rep-designation').value = rep.designation || '';
+    document.getElementById('rep-state').value       = rep.state       || '';
+    document.getElementById('rep-city').value        = rep.city        || '';
+    document.getElementById('rep-bio').value         = rep.bio         || '';
+    _repPhotoBase64 = rep.photoBase64 || '';
+    document.getElementById('rep-photo-preview').innerHTML = rep.photoBase64
+        ? `<img src="${rep.photoBase64}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #e2e8f0;">`
+        : '';
+    document.getElementById('rep-form-title').textContent = 'Edit Representative';
+    document.getElementById('rep-submit-btn').textContent  = 'Update Representative';
+    document.getElementById('rep-success').style.display   = 'none';
+    formSection.style.display = 'block';
+    formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+document.getElementById('rep-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn    = document.getElementById('rep-submit-btn');
+    const editId = document.getElementById('edit-rep-id').value;
+    btn.textContent = 'Saving...';
+    const payload = {
+        countryId:   document.getElementById('rep-country-id').value,
+        name:        document.getElementById('rep-name').value.trim(),
+        designation: document.getElementById('rep-designation').value.trim(),
+        state:       document.getElementById('rep-state').value.trim(),
+        city:        document.getElementById('rep-city').value.trim(),
+        bio:         document.getElementById('rep-bio').value.trim(),
+    };
+    if (_repPhotoBase64) payload.photoBase64 = _repPhotoBase64;
+    try {
+        if (editId) {
+            await updateDoc(doc(db, 'peace_representatives', editId), payload);
+        } else {
+            payload.createdAt = Timestamp.now();
+            await addDoc(collection(db, 'peace_representatives'), payload);
+        }
+        document.getElementById('rep-success').style.display = 'block';
+        setTimeout(() => { document.getElementById('rep-success').style.display = 'none'; }, 3000);
+        resetRepForm();
+        await loadRepresentatives();
+    } catch(err) {
+        console.error(err);
+        alert('Error saving representative. See console.');
+    }
+    btn.textContent = 'Save Representative';
+});
+
+function resetRepForm() {
+    document.getElementById('rep-form').reset();
+    document.getElementById('edit-rep-id').value    = '';
+    document.getElementById('rep-country-id').value = '';
+    document.getElementById('rep-photo-preview').innerHTML = '';
+    _repPhotoBase64 = '';
+    document.getElementById('rep-form-section').style.display = 'none';
+    document.getElementById('rep-form-title').textContent = 'Add New Representative';
+    document.getElementById('rep-submit-btn').textContent  = 'Save Representative';
+}
+document.getElementById('rep-cancel-btn').addEventListener('click', resetRepForm);
+
+window.deleteRep = async (repId) => {
+    if (!confirm('Delete this representative?')) return;
+    try {
+        await deleteDoc(doc(db, 'peace_representatives', repId));
+        await loadRepresentatives();
+    } catch(err) {
+        console.error(err);
+        alert('Error deleting representative.');
+    }
+};
