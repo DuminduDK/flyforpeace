@@ -145,90 +145,28 @@
         </div>
     </div>
 
-    <!-- Representatives Content (dynamically loaded from Firestore) -->
+    <!-- Representatives Content -->
     <section class="content-section pt-0">
-        <div class="container section-container" id="reps-public-container">
-            <div style="text-align:center;padding:60px;color:#aaa;">
-                <i class="fas fa-spinner fa-spin" style="font-size:2rem;"></i>
-                <p style="margin-top:12px;">Loading representatives...</p>
+        <div class="container section-container">
+            
+            <div class="country-section">
+                <div class="country-header animate-on-scroll">
+                    <img src="assets/india-flag.png" alt="India Flag" class="country-flag">
+                    <h2>India</h2>
+                </div>
+                
+                <div class="representative-grid">
+                    <!-- Representative: Capt. Shekhar Gupta -->
+                    <div class="messenger-card animate-on-scroll">
+                        <img src="assets/Shekhar Gupta.jpeg" alt="Capt. Shekhar Gupta">
+                        <h3>Capt. Shekhar Gupta</h3>
+                        <p>State Representative</p>
+                    </div>
+                </div>
             </div>
+
         </div>
     </section>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAUYiJA2nbUj8HOwG7GBZFBAzoSxrPsh18",
-            authDomain: "flyforpeace-1c5f4.firebaseapp.com",
-            projectId: "flyforpeace-1c5f4",
-            storageBucket: "flyforpeace-1c5f4.firebasestorage.app",
-            messagingSenderId: "840883005521",
-            appId: "1:840883005521:web:73e73cc73f46a3fbaf3070"
-        };
-        const app = initializeApp(firebaseConfig);
-        const db  = getFirestore(app);
-
-        async function loadPublicReps() {
-            const container = document.getElementById('reps-public-container');
-            try {
-                const [cSnap, rSnap] = await Promise.all([
-                    getDocs(query(collection(db, 'peace_countries'), orderBy('name'))),
-                    getDocs(query(collection(db, 'peace_representatives'), orderBy('name')))
-                ]);
-
-                const countries = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-                const reps      = rSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-
-                if (!countries.length) {
-                    container.innerHTML = '<p style="text-align:center;color:#aaa;padding:60px;">No representatives listed yet. Check back soon!</p>';
-                    return;
-                }
-
-                let html = '';
-                countries.forEach(country => {
-                    const countryReps = reps.filter(r => r.countryId === country.id);
-                    if (!countryReps.length) return; // skip empty countries on public page
-
-                    html += `
-                    <div class="country-section">
-                        <div class="country-header animate-on-scroll">
-                            <img src="assets/${country.flagFilename}" alt="${country.name} Flag" class="country-flag" onerror="this.style.display='none'">
-                            <h2>${country.name}</h2>
-                        </div>
-                        <div class="representative-grid">
-                            ${countryReps.map(rep => `
-                            <div class="messenger-card animate-on-scroll">
-                                ${rep.photoBase64
-                                    ? `<img src="${rep.photoBase64}" alt="${rep.name}">`
-                                    : `<div style="width:150px;height:150px;border-radius:50%;background:#f0f4ff;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;border:4px solid #f0f4ff;box-shadow:0 5px 15px rgba(0,0,0,0.1);"><i class="fas fa-user" style="font-size:3.5rem;color:#cbd5e1;"></i></div>`
-                                }
-                                <h3>${rep.name}</h3>
-                                <p>${rep.designation}</p>
-                                ${(rep.state || rep.city) ? `<p style="font-size:0.8rem;color:#94a3b8;text-transform:none;letter-spacing:0;margin-bottom:0;">${[rep.state, rep.city].filter(Boolean).join(', ')}</p>` : ''}
-                            </div>`).join('')}
-                        </div>
-                    </div>`;
-                });
-
-                container.innerHTML = html || '<p style="text-align:center;color:#aaa;padding:60px;">No representatives listed yet. Check back soon!</p>';
-
-                // Re-trigger scroll animations for newly added elements
-                if (window.scrollObserver) {
-                    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-                        el.classList.remove('is-visible');
-                        window.scrollObserver.observe(el);
-                    });
-                }
-            } catch(err) {
-                console.error(err);
-                container.innerHTML = '<p style="text-align:center;color:#e74c3c;padding:60px;">Error loading representatives. Please try again later.</p>';
-            }
-        }
-
-        loadPublicReps();
-    </script>
 
     <!-- Footer -->
     <footer class="footer">

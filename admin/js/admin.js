@@ -30,7 +30,6 @@ onAuthStateChanged(auth, (user) => {
         loadMembers();
         loadDonations();
         loadMessages();
-        loadRepresentatives();
     }
 });
 
