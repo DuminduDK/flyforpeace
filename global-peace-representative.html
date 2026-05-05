@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Peace Messengers | Fly for Peace</title>
-    <meta name="description" content="Meet our Global Peace Messengers representing unity across languages and cultures.">
+    <title>Global Peace Representative | Fly for Peace</title>
+    <meta name="description" content="Meet our Global Peace Representatives representing unity across countries.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://flyforpeace.com/global-peace-messengers.html">
-    <meta property="og:title" content="Global Peace Messengers | Fly for Peace">
-    <meta property="og:description" content="Meet our Global Peace Messengers representing unity across languages and cultures.">
+    <meta property="og:url" content="https://flyforpeace.com/global-peace-representative.html">
+    <meta property="og:title" content="Global Peace Representative | Fly for Peace">
+    <meta property="og:description" content="Meet our Global Peace Representatives representing unity across countries.">
     <meta property="og:image" content="https://flyforpeace.com/assets/social-share.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://flyforpeace.com/global-peace-messengers.html">
-    <meta property="twitter:title" content="Global Peace Messengers | Fly for Peace">
-    <meta property="twitter:description" content="Meet our Global Peace Messengers representing unity across languages and cultures.">
+    <meta property="twitter:url" content="https://flyforpeace.com/global-peace-representative.html">
+    <meta property="twitter:title" content="Global Peace Representative | Fly for Peace">
+    <meta property="twitter:description" content="Meet our Global Peace Representatives representing unity across countries.">
     <meta property="twitter:image" content="https://flyforpeace.com/assets/social-share.jpg">
     <link rel="icon" type="image/png" href="assets/logo.png">
     
@@ -27,13 +27,39 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/pages.css">
     <style>
-        .messenger-grid {
+        .country-section {
+            margin-top: 2rem;
+            margin-bottom: 4rem;
+        }
+        .country-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: #f8fafc;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: inline-flex;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .country-flag {
+            width: 40px;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .country-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #1a202c;
+        }
+        .representative-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 2rem;
-            margin-top: 2rem;
-            padding-bottom: 3rem;
+            padding-bottom: 2rem;
         }
         .messenger-card {
             flex: 1 1 300px;
@@ -76,9 +102,8 @@
             letter-spacing: 1px;
             margin-bottom: 1.5rem;
         }
-        .messenger-card .btn {
-            margin-top: auto;
-            width: 100%;
+        .section-container {
+            text-align: center;
         }
     </style>
 </head>
@@ -94,12 +119,12 @@
                 <ul class="nav-list">
                     <li><a href="index.html" class="nav-item">Home</a></li>
                     <li class="dropdown">
-    <a href="about.html" class="nav-item active">About <i class="fas fa-chevron-down" style="font-size: 0.8em; margin-left: 4px;"></i></a>
-    <div class="dropdown-content">
-        <a href="global-peace-messengers.html" class="dropdown-link">Global Peace Messengers</a>
-        <a href="global-peace-representative.html" class="dropdown-link">Global Peace Representative</a>
-    </div>
-</li>
+                        <a href="about.html" class="nav-item active">About <i class="fas fa-chevron-down" style="font-size: 0.8em; margin-left: 4px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="global-peace-messengers.html" class="dropdown-link">Global Peace Messengers</a>
+                            <a href="global-peace-representative.html" class="dropdown-link">Global Peace Representative</a>
+                        </div>
+                    </li>
                     <li><a href="leadership.html" class="nav-item">Leadership</a></li>
                     <li><a href="membership.html" class="nav-item">Membership</a></li>
                     <li><a href="largest-peace.html" class="nav-item">Largest Peace</a></li>
@@ -115,72 +140,31 @@
 
     <div class="page-header">
         <div class="container animate-up">
-            <h1>Global Peace Messengers</h1>
-            <p>Voices mapping unity and harmony across languages around the world.</p>
+            <h1>Global Peace Representative</h1>
+            <p>Dedicated individuals leading the movement for unity and harmony in their respective countries.</p>
         </div>
     </div>
 
-    <!-- Messengers Content -->
+    <!-- Representatives Content -->
     <section class="content-section pt-0">
-        <div class="container">
-            <div class="messenger-grid">
-                <!-- Messenger 1 -->
-                <div class="messenger-card animate-on-scroll">
-                    <img src="assets/Samadhi.png" alt="Samadhi Kalawana Koralearachchi">
-                    <h3>Samadhi Kalawana Koralearachchi</h3>
-                    <p>English</p>
-                    <a href="https://youtu.be/qsiWcA4I8AU" class="btn btn-primary" target="_blank"><i class="fab fa-youtube"></i> Watch Speech</a>
+        <div class="container section-container">
+            
+            <div class="country-section">
+                <div class="country-header animate-on-scroll">
+                    <img src="assets/india-flag.png" alt="India Flag" class="country-flag">
+                    <h2>India</h2>
                 </div>
-                <!-- Messenger 2 -->
-                <div class="messenger-card animate-on-scroll">
-                    <img src="assets/gaganajith.png" alt="Gaganajith Kalawana Koralearachchi">
-                    <h3>Gaganajith Kalawana Koralearachchi</h3>
-                    <p>Sinhala</p>
-                    <a href="https://youtu.be/oRS8aw4tcIk" class="btn btn-primary" target="_blank"><i class="fab fa-youtube"></i> Watch Speech</a>
-                </div>
-                <!-- Messenger 3 -->
-                <div class="messenger-card animate-on-scroll">
-                    <img src="assets/mario.jpg" alt="Rajkumar Mario Geomian">
-                    <h3>Rajkumar Mario Geomian</h3>
-                    <p>Tamil</p>
-                    <a href="https://youtu.be/vfJUeEeDs_Q" class="btn btn-primary" target="_blank"><i class="fab fa-youtube"></i> Watch Speech</a>
-                </div>
-                <!-- Messenger 4 -->
-                <div class="messenger-card animate-on-scroll">
-                    <img src="assets/Nina.jpg" alt="Nina Tahou">
-                    <h3>Nina Tahou</h3>
-                    <p>French</p>
-                    <a href="https://youtu.be/DcnzTLCMl1s" class="btn btn-primary" target="_blank"><i class="fab fa-youtube"></i> Watch Speech</a>
-                </div>
-                <!-- Messenger 5 -->
-                <div class="messenger-card animate-on-scroll">
-                    <img src="assets/rukayya.jpg" alt="Rukkaiyah Miskin">
-                    <h3>Rukkaiyah Miskin</h3>
-                    <p>Moor Tamil</p>
-                    <a href="https://youtu.be/rlMlrxzskq0" class="btn btn-primary" target="_blank"><i class="fab fa-youtube"></i> Watch Speech</a>
-                </div>
-                <!-- Messenger 6 -->
-                <div class="messenger-card animate-on-scroll">
-                    <img src="assets/yoosuf.jpg" alt="M.J. Yoosuf Qanith">
-                    <h3>M.J. Yoosuf Qanith</h3>
-                    <p>Arabic</p>
-                    <a href="https://youtu.be/AYbxBIAm5zc" class="btn btn-primary" target="_blank"><i class="fab fa-youtube"></i> Watch Speech</a>
-                </div>
-                <!-- Messenger 7 -->
-                <div class="messenger-card animate-on-scroll">
-                    <img src="assets/Azeen.jpg" alt="Azeen Manha" style="object-position: center 40%;">
-                    <h3>Azeen Manha</h3>
-                    <p>Malay</p>
-                    <a href="https://youtu.be/pZov6JXgWbc" class="btn btn-primary" target="_blank"><i class="fab fa-youtube"></i> Watch Speech</a>
-                </div>
-                <!-- Messenger 8 -->
-                <div class="messenger-card animate-on-scroll">
-                    <img src="assets/rauf.jpg" alt="Rayeesha Rauf">
-                    <h3>Rayeesha Rauf</h3>
-                    <p>Hindi</p>
-                    <a href="https://youtu.be/ZzCqGvzZyWI" class="btn btn-primary" target="_blank"><i class="fab fa-youtube"></i> Watch Speech</a>
+                
+                <div class="representative-grid">
+                    <!-- Representative: Capt. Shekhar Gupta -->
+                    <div class="messenger-card animate-on-scroll">
+                        <img src="assets/Shekhar Gupta.jpeg" alt="Capt. Shekhar Gupta">
+                        <h3>Capt. Shekhar Gupta</h3>
+                        <p>State Representative</p>
+                    </div>
                 </div>
             </div>
+
         </div>
     </section>
 

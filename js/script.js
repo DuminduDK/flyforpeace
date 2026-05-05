@@ -16,14 +16,47 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-    // Close mobile menu when clicking a link
+    // Handle mobile menu link clicks and dropdowns
     document.querySelectorAll('.nav-list a').forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                const parentLi = this.parentElement;
+                
+                // If this is a dropdown parent link
+                if (parentLi.classList.contains('dropdown')) {
+                    const dropdownContent = this.nextElementSibling;
+                    
+                    // If dropdown is not currently expanded
+                    if (dropdownContent.style.display !== 'block') {
+                        e.preventDefault(); // First tap: show dropdown, prevent navigation
+                        
+                        // Hide other open dropdowns
+                        document.querySelectorAll('.nav-list .dropdown-content').forEach(content => {
+                            content.style.display = 'none';
+                        });
+                        
+                        dropdownContent.style.display = 'block';
+                        return; // Stop here, do not close the mobile menu
+                    }
+                    // Second tap: allow navigation and continue below to close the mobile menu
+                }
+            }
+            
+            // For normal links, subpage links, or second tap on dropdown parent: close the menu
             if(navList && menuToggle) {
                 navList.classList.remove('show');
                 const icon = menuToggle.querySelector('i');
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
+                if (icon) {
+                    icon.classList.remove('fa-xmark');
+                    icon.classList.add('fa-bars');
+                }
+                
+                // Reset dropdown display after menu closes
+                setTimeout(() => {
+                    document.querySelectorAll('.nav-list .dropdown-content').forEach(content => {
+                        content.style.display = '';
+                    });
+                }, 300);
             }
         });
     });

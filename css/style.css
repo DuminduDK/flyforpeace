@@ -235,6 +235,7 @@ header.scrolled .logo {
     padding: 0.5rem 0;
     transform: translateY(10px);
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .nav-list .dropdown:hover .dropdown-content {
